@@ -12,19 +12,19 @@ export const getExcelData = async (): Promise<CountryData[]> => {
     const [headers, ...dataRows] = rows;
     const years = dataRows[1].slice(1).map((year) => Number(year));
 
-    const transformedData: CountryData[] = dataRows
+    const transformedData = dataRows
       .slice(2)
       .filter((row) => countryList.includes(row[0] as string))
       .map((row) => {
         const country = row[0] as string;
-        const scores = years.map((year, index) => ({
+        const scores = row.map((year, index) => ({
           year,
           value:
             typeof row[index + 1] === "number" ? Number(row[index + 1]) : null,
         }));
 
         return {
-          country,
+          year,
           scores,
         };
       });

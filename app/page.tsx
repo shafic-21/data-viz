@@ -3,7 +3,9 @@
 import { CountryData } from "@/types";
 import { getExcelData } from "@/utils";
 import { useEffect, useState } from "react";
-import BubbleChart from "./components/BubbleChart";
+
+import NewBubbleChart from "./components/NewBubbleChart";
+
 
 
 export default function Home() {
@@ -25,13 +27,10 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <h1>Country Data</h1>
-      {countryData ? (
-        <ul>
-         <BubbleChart data={countryData}/>
-        </ul>
-      ) : (
-        <p>Loading country data...</p>
-      )}
+      {countryData &&
+        countryData.map(({ scores, year }) => (
+          <NewBubbleChart data={scores} />
+        ))}
     </main>
   );
 }
