@@ -1,6 +1,6 @@
 "use client";
 
-import { getExcelData } from "@/utils";
+import { generateDataNodesandLinks, getExcelData } from "@/utils";
 import { useCallback, useEffect, useState } from "react";
 
 import YearsDataBubble from "./components/YearsDataBubble";
@@ -8,18 +8,22 @@ import YearsDataBubble from "./components/YearsDataBubble";
 export default function Home() {
   const [data, setData] = useState(null);
   const [fieldName, setFieldName] = useState(null);
+  const [filePath, setFilePath] = useState("/data/2024.xlsx");
 
   const fetchData = useCallback(async () => {
-    const result = await getExcelData().then((res) => {
-      const { data, fieldName } = res;
-      setData(data);
-      setFieldName(fieldName);
-    });
-  }, [data, fieldName]);
+    const result = await generateDataNodesandLinks(filePath).then(
+      (res) => {
+        const { data, fieldName } = res;
+        setData(data);
+        setFieldName(fieldName);
+        console.log(data)
+      }
+    );
+  }, [data, fieldName,filePath]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [filePath]);
 
   return (
     <main className="h-screen w-screen p-8 flex flex-col relative isolate">

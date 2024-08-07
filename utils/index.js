@@ -1,56 +1,100 @@
 import { countryList } from "@/constants";
 import readXlsxFile from "read-excel-file";
 
-export const getExcelData = async () => {
+export const generateDataNodesandLinks = async (filePath) => {
+  const { data: rawData, fieldName } = await getExcelData(filePath);
+
+  const years = rawData[0].slice(1);
+
+  const regions = rawData.slice(54, 60).map((cells) => {
+    let regionName = cells[0];
+    let values = cells.slice(1).map((value, i) => {
+      let year = years[i];
+      return {
+        id: `${year}-${regionName}`,
+        value,
+        year,
+      };
+    });
+
+    let rNodes = [{ id: regionName, value: regionName, year: null }, ...values];
+    let rLists = rNodes.slice(1).map((item) => {
+      return { source: item.id, target: rNodes[0].id };
+    });
+
+    return {
+      id: regionName,
+      name: regionName,
+      region:regionName,
+      data: {
+        nodes: rNodes, //specific region nodes
+        links: rLists, //specific region links
+      },
+    };
+  });
+
+  const countries = rawData.slice(54, 60).map((cells) => {
+    let countryName = cells[0];
+    let values = cells.slice(1).map((value, i) => {
+      let year = years[i];
+      return {
+        id: `${year}-${countryName}`,
+        value,
+        year,
+      };
+    });
+
+    let cNodes = [
+      { id: countryName, value: countryName, year: null },
+      ...values,
+    ];
+    let cLists = cNodes.slice(1).map((item) => {
+      return { source: item.id, target: cNodes[0].id };
+    });
+
+    return {
+      id: countryName,
+      name: countryName,
+      region:,
+      data: {
+        nodes: cNodes, //specific region nodes
+        links: cLists, //specific region links
+      },
+    };
+  });
+
+  const nodes = [...regions, ...countries];
+  const lists = countries.map((country) => {
+    return {
+      source:country.id,
+      target:country.region
+    };
+  });
+
+  return {
+    fieldName,
+    data: {
+      nodes,
+      links,
+    },
+  };
+};
+
+//This is the function that extracts data from the excel file
+async function getExcelData(filePath) {
+  // "/data/2024.xlsx";
   try {
-    const response = await fetch("/data/2024.xlsx");
+    const response = await fetch(filePath);
     const blob = await response.blob();
     const rows = await readXlsxFile(blob);
 
     const [headers, ...dataRows] = rows;
-    const years = dataRows[1].slice(1).map((year) => {
-      return {
-        id: String(year),
-        value: Number(year),
-        year: String(year),
-        type: "year",
-      };
-    });
-
-   const actualData = years.flatMap((yr) => {
-     const yearIndex = dataRows[1].indexOf(Number(yr.id));
-     return dataRows
-       .slice(2)
-       .filter((row) => countryList.includes(row[0]))
-       .map((row) => {
-         return {
-           id: `${yr.id}-${row[0]}`,
-           value: Number(row[yearIndex]) || -1,
-           year: yr.id,
-           country: row[0],
-           type: "data-point",
-         };
-       });
-   });
-
-    const nodes = [...years, ...actualData];
-
-    const links = actualData.map((dataPoint) => {
-      return {
-        source: dataPoint.id,
-        target: dataPoint.year,
-      };
-    });
 
     return {
-      fieldName: String(headers[0]),
-      data: {
-        nodes,
-        links,
-      },
+      fieldName: String(headers[0]), //I get the field name.
+      data: dataRows.slice(1, 61), //Here I slice the data to make sure i get the countries and regions only
     };
   } catch (error) {
-    console.error("Error reading the Excel file:", error);
-    return [];
+    throw new Error("Error reading the Excel file:", error);
   }
-};
+}

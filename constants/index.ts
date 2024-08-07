@@ -53,20 +53,19 @@ export const countryList = [
 ];
 
 export const regionList = [
-  "Africa wide",
-  "Western Africa",
-  "Southern Africa",
-  "Northern Africa",
-  "Eastern Africa",
-  "Central Africa",
-];
-
-[
   {
     id: "africa-wide",
     region: "Africa wide",
     countries: [...countryList],
   },
+  {
+    id: "Western Africa",
+  },
+  { id: "Southern Africa" },
+  { id: "Northern Africa" },
+  { id: "Eastern Africa" },
+  { id: "Central Africa" },
+
   /*regions
 {
   region,
