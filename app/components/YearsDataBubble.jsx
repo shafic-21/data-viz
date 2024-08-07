@@ -24,8 +24,8 @@ const YearsDataBubble = ({ data }) => {
       .attr("height", height)
       .attr("style", "max-width: 100%; height: auto;");
 
-    const yearRadius = 20;
-    const dataRadius = 5;
+    const yearRadius = 30;
+    const dataRadius = 10;
 
     const colorScale = d3
       .scaleThreshold()
@@ -44,20 +44,20 @@ const YearsDataBubble = ({ data }) => {
 
     const simulation = d3
       .forceSimulation(nodes)
-      // .force(
-      //   "link",
-      //   d3
-      //     .forceLink(links)
-      //     .id((d) => d.id)
-      //     .distance(0)
-      // )
+      .force(
+        "link",
+        d3
+          .forceLink(links)
+          .id((d) => d.id)
+          .distance(0)
+      )
       .force("charge", d3.forceManyBody().strength(-15))
       .force("center", d3.forceCenter(width / 2, height / 2))
       .force(
         "collision",
         d3
           .forceCollide()
-          .radius((d) => (d.type === "year" ? yearRadius : dataRadius + 2))
+          .radius((d) => (d.type === "region" ? yearRadius+10 : dataRadius))
           .iterations(3)
       )
       .force("x", d3.forceX())
@@ -77,8 +77,8 @@ const YearsDataBubble = ({ data }) => {
 
     node
       .append("circle")
-      .attr("r", (d) => (d.type === "year" ? yearRadius : dataRadius))
-      .attr("fill", (d) => (d.type === "year" ? "white" : colorScale(d.value)));
+      .attr("r", (d) => (d.type === "region" ? yearRadius : dataRadius))
+      .attr("fill", (d) => (d.type === "region" ? "white" : "lightblue"));
 
     node
       .append("text")
@@ -88,9 +88,9 @@ const YearsDataBubble = ({ data }) => {
       .attr("dy", "0.35em")
       .attr("fill", "#000");
 
-    node
-      .append("title")
-      .text((d) => (d.type === "year" ? d.year : `${d.id}: ${d.value}`));
+    // node
+    //   .append("title")
+    //   .text((d) => (d.type === "region" ? d.region : `${d.id}: ${d.name}`));
 
     node.call(
       d3

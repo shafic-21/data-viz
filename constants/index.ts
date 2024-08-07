@@ -61,6 +61,7 @@ export const regionList = [
   },
   {
     id: "western-africa",
+    name: "Western Africa",
     countries: [
       { name: "Benin", image: "/images/benin.png" },
       { name: "Burkina Faso", image: "/images/burkina-faso.webp" },
@@ -82,6 +83,7 @@ export const regionList = [
   },
   {
     id: "southern-africa",
+    name: "Southern Africa",
     countries: [
       { name: "Angola", image: "/images/angola.webp" },
       { name: "Botswana", image: "/images/botswana.png" },
@@ -106,6 +108,7 @@ export const regionList = [
   },
   {
     id: "eastern-africa",
+    name: "Eastern Africa",
     countries: [
       { name: "Burundi", image: "/images/burundi.png" },
       { name: "Comoros", image: "/images/comoros.webp" },
@@ -127,6 +130,7 @@ export const regionList = [
   },
   {
     id: "central-africa",
+    name: "Central Africa",
     countries: [
       {
         name: "Central African Republic",
