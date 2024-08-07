@@ -60,3 +60,12 @@ export const regionList = [
   "Eastern Africa",
   "Central Africa",
 ];
+
+export const legendData = [
+  { color: "#08519C", label: "50 or more" },
+  { color: "#3182BD", label: "30 - 50" },
+  { color: "#6BAED6", label: "10 - 30" },
+  { color: "#BDD7E7", label: "5 - 7.5" },
+  { color: "#E6EFF4", label: "0 - 5" },
+  { color: "#808080", label: "no data" },
+];
