@@ -59,6 +59,7 @@ export const regionList = [
     name: "Africa wide",
     countries: [...countryList],
   },
+  //Please leave africa wide at index 0
   {
     id: "western-africa",
     //name

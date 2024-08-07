@@ -1,4 +1,4 @@
-import { countryList } from "@/constants";
+import { countryList, regionList } from "@/constants";
 import readXlsxFile from "read-excel-file";
 
 export const generateDataNodesandLinks = async (filePath) => {
@@ -52,10 +52,12 @@ export const generateDataNodesandLinks = async (filePath) => {
       return { source: item.id, target: cNodes[0].id };
     });
 
+    const region = regionList.filter((reg)=>reg.countries.includes(countryName))[0].name
+
     return {
       id: countryName,
       name: countryName,
-      region:,
+      region:regionList.map,
       data: {
         nodes: cNodes, //specific region nodes
         links: cLists, //specific region links
