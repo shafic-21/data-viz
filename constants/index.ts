@@ -61,6 +61,7 @@ export const regionList = [
   },
   {
     id: "western-africa",
+    name: "Western Africa",
     countries: [
       "Benin",
       "Burkina Faso",
@@ -82,11 +83,13 @@ export const regionList = [
   },
   {
     id: "southern-africa",
+    name: "Southern Africa",
     countries: [
       "Angola",
       "Botswana",
       "Lesotho",
       "Mozambique",
+      "Eswatini",
       "Namibia",
       "South Africa",
       "Swaziland",
@@ -96,15 +99,18 @@ export const regionList = [
   },
   {
     id: "northern-africa",
+    name: "Northern Africa",
     countries: ["Algeria", "Egypt", "Libya", "Morocco", "Tunisia"],
   },
   {
     id: "eastern-africa",
+    name: "Eastern Africa",
     countries: [
       "Burundi",
       "Comoros",
       "Djibouti",
       "Ethiopia",
+      "Eritrea",
       "Kenya",
       "Madagascar",
       "Malawi",
@@ -112,7 +118,7 @@ export const regionList = [
       "Rwanda",
       "Seychelles",
       "Somalia",
-      "South Sudan",
+      "South-Sudan",
       "Sudan",
       "Tanzania",
       "Uganda",
@@ -120,9 +126,12 @@ export const regionList = [
   },
   {
     id: "central-africa",
+    name: "Central Africa",
     countries: [
       "Central African Republic",
       "Cameroon",
+      "Chad",
+      "Equatorial Guinea",
       "Congo, Dem. Rep. of",
       "Congo, Republic of",
       "Gabon",
