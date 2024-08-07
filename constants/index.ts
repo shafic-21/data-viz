@@ -63,12 +63,13 @@ export const regionList = [
   {
     id: "western-africa",
     //name
+    countries: [],
     //countries array of strings
   },
-  { id: "southern-africa" },
-  { id: "northern-africa" },
-  { id: "eastern-africa" },
-  { id: "central-africa" },
+  { id: "southern-africa", countries: [] },
+  { id: "northern-africa", countries: [] },
+  { id: "eastern-africa", countries: [] },
+  { id: "central-africa", countries: [] },
 
   /*regions
 {

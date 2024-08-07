@@ -25,7 +25,7 @@ export const generateDataNodesandLinks = async (filePath) => {
     return {
       id: regionName,
       name: regionName,
-      region:regionName,
+      region: regionName,
       data: {
         nodes: rNodes, //specific region nodes
         links: rLists, //specific region links
@@ -52,12 +52,14 @@ export const generateDataNodesandLinks = async (filePath) => {
       return { source: item.id, target: cNodes[0].id };
     });
 
-    const region = regionList.filter((reg)=>reg.countries.includes(countryName))[0].name
+    const region = regionList
+      .slice(1)
+      .filter((reg) => reg.countries.includes(countryName))[0].name;
 
     return {
       id: countryName,
       name: countryName,
-      region:regionList.map,
+      region,
       data: {
         nodes: cNodes, //specific region nodes
         links: cLists, //specific region links
@@ -68,8 +70,8 @@ export const generateDataNodesandLinks = async (filePath) => {
   const nodes = [...regions, ...countries];
   const lists = countries.map((country) => {
     return {
-      source:country.id,
-      target:country.region
+      source: country.id,
+      target: country.region,
     };
   });
 
