@@ -54,7 +54,7 @@ export const generateDataNodesandLinks = async (filePath) => {
 
     const region = regionList
       .slice(1)
-      .filter((reg) => reg.countries.includes(countryName))[0].name;
+      .filter((reg) => reg.countries.includes(countryName))[0]?.name??"";
 
     return {
       id: countryName,
@@ -68,7 +68,7 @@ export const generateDataNodesandLinks = async (filePath) => {
   });
 
   const nodes = [...regions, ...countries];
-  const lists = countries.map((country) => {
+  const links = countries.map((country) => {
     return {
       source: country.id,
       target: country.region,

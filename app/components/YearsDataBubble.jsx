@@ -6,19 +6,16 @@ import * as d3 from "d3";
 const YearsDataBubble = ({ data }) => {
   const svgRef = useRef(null);
   const containerRef = useRef(null);
-
-  console.log(data);
+  const [width, setWidth] = useState(null);
+  const [height, setHeight] = useState(null);
 
   useEffect(() => {
-    if (!data || !svgRef.current) return;
-
-    const container = containerRef.current;
+    if (!data || !svgRef.current || !containerRef) return;
+    setWidth(containerRef.current?.clientWidth);
+    setHeight(containerRef.current?.clientHeight);
     const svg = d3.select(svgRef.current);
 
     svg.selectAll("*").remove();
-
-    let width = container.clientWidth;
-    let height = container.clientHeight;
 
     svg
       .attr("viewBox", [0, 0, width, height])
@@ -47,13 +44,13 @@ const YearsDataBubble = ({ data }) => {
 
     const simulation = d3
       .forceSimulation(nodes)
-      .force(
-        "link",
-        d3
-          .forceLink(links)
-          .id((d) => d.id)
-          .distance(0)
-      )
+      // .force(
+      //   "link",
+      //   d3
+      //     .forceLink(links)
+      //     .id((d) => d.id)
+      //     .distance(0)
+      // )
       .force("charge", d3.forceManyBody().strength(-15))
       .force("center", d3.forceCenter(width / 2, height / 2))
       .force(
@@ -113,19 +110,19 @@ const YearsDataBubble = ({ data }) => {
       node.attr("transform", (d) => `translate(${d.x},${d.y})`);
     });
 
-    function updateVisualization() {
-      width = container.clientWidth;
-      height = container.clientHeight;
+    // function updateVisualization() {
+    //   width = container.clientWidth;
+    //   height = container.clientHeight;
 
-      svg.attr("viewBox", `0 0 ${width} ${height}`);
+    //   svg.attr("viewBox", `0 0 ${width} ${height}`);
 
-      simulation
-        .force("center", d3.forceCenter(width / 2, height / 2))
-        .force("x", d3.forceX(width / 2).strength(0.1))
-        .force("y", d3.forceY(height / 2).strength(0.1))
-        .alpha(0.3)
-        .restart();
-    }
+    //   simulation
+    //     .force("center", d3.forceCenter(width / 2, height / 2))
+    //     .force("x", d3.forceX(width / 2).strength(0.1))
+    //     .force("y", d3.forceY(height / 2).strength(0.1))
+    //     .alpha(0.3)
+    //     .restart();
+    // }
 
     //WHen drag starts this fixes the node position.
     function dragstarted(event) {
@@ -147,14 +144,14 @@ const YearsDataBubble = ({ data }) => {
       event.subject.fy = null;
     }
 
-    updateVisualization();
-    window.addEventListener("resize", updateVisualization);
+    // updateVisualization();
+    // window.addEventListener("resize", updateVisualization);
 
     return () => {
       simulation.stop();
-      window.removeEventListener("resize", updateVisualization);
+      // window.removeEventListener("resize", updateVisualization);
     };
-  }, [data]);
+  }, [data, width, height]);
 
   return (
     <div
