@@ -24,8 +24,9 @@ const YearsDataBubble = ({ data }) => {
       .attr("height", height)
       .attr("style", "max-width: 100%; height: auto;");
 
-    const yearRadius = 30;
-    const dataRadius = 10;
+    const countryRadius = 10;
+    const regionRadius = 30;
+    const dataRadius = 5;
 
     const colorScale = d3
       .scaleThreshold()
@@ -51,13 +52,22 @@ const YearsDataBubble = ({ data }) => {
           .id((d) => d.id)
           .distance(0)
       )
+      .force(
+        "link",
+        d3
+          .forceLink(nodes.filter((d) => d.type == "country").map((d)=>d.links))
+          .id((d) => d.id)
+          .distance(0)
+      )
       .force("charge", d3.forceManyBody().strength(-15))
       .force("center", d3.forceCenter(width / 2, height / 2))
       .force(
         "collision",
         d3
           .forceCollide()
-          .radius((d) => (d.type === "region" ? yearRadius+10 : dataRadius))
+          .radius((d) =>
+            d.type === "region" ? regionRadius + 10 : countryRadius + 2
+          )
           .iterations(3)
       )
       .force("x", d3.forceX())
@@ -74,19 +84,29 @@ const YearsDataBubble = ({ data }) => {
       .attr("stroke-width", (d) => Math.sqrt(2));
 
     const node = svg.append("g").selectAll("g").data(nodes).join("g");
+    const vNode = svg
+      .append("g")
+      .selectAll("g")
+      .data(nodes.filter((d) => d.type == "country").data.nodes)
+      .join("g");
 
-    node
+    vNode
       .append("circle")
-      .attr("r", (d) => (d.type === "region" ? yearRadius : dataRadius))
+      .attr("r", (d) => (dataRadius))
       .attr("fill", (d) => (d.type === "region" ? "white" : "lightblue"));
 
     node
-      .append("text")
-      .text((d) => (d.type == "year" ? d.year : ""))
-      .attr("font-size", "10px")
-      .attr("text-anchor", "middle")
-      .attr("dy", "0.35em")
-      .attr("fill", "#000");
+      .append("circle")
+      .attr("r", (d) => (d.type === "region" ? regionRadius : yearRadius))
+      .attr("fill", (d) => (d.type === "region" ? "lightblue" : "yellow"));
+
+    // node
+    //   .append("text")
+    //   .text((d) => (d.type == "year" ? d.year : ""))
+    //   .attr("font-size", "10px")
+    //   .attr("text-anchor", "middle")
+    //   .attr("dy", "0.35em")
+    //   .attr("fill", "#000");
 
     // node
     //   .append("title")

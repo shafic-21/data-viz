@@ -11,7 +11,7 @@ export const generateDataNodesandLinks = async (filePath) => {
     let values = cells.slice(1).map((value, i) => {
       let year = years[i];
       return {
-        id: `${year}-${regionName}`,
+        id: `${regionName}`,
         value,
         year,
       };
@@ -39,7 +39,7 @@ export const generateDataNodesandLinks = async (filePath) => {
     let values = cells.slice(1).map((value, i) => {
       let year = years[i];
       return {
-        id: `${year}-${countryName}`,
+        id: `${countryName}`,
         value,
         year,
       };
