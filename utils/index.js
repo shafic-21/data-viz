@@ -3,7 +3,7 @@ import readXlsxFile from "read-excel-file";
 
 export const getExcelData = async () => {
   try {
-    const response = await fetch("/data/excel.xlsx");
+    const response = await fetch("/data/2024.xlsx");
     const blob = await response.blob();
     const rows = await readXlsxFile(blob);
 
@@ -16,8 +16,6 @@ export const getExcelData = async () => {
         type: "year",
       };
     });
-
-    console.log(dataRows,years)
 
    const actualData = years.flatMap((yr) => {
      const yearIndex = dataRows[1].indexOf(Number(yr.id));
@@ -34,8 +32,6 @@ export const getExcelData = async () => {
          };
        });
    });
-
-      console.log(actualData)
 
     const nodes = [...years, ...actualData];
 

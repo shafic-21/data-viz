@@ -61,6 +61,21 @@ export const regionList = [
   "Central Africa",
 ];
 
+[
+  {
+    id: "africa-wide",
+    region: "Africa wide",
+    countries: [...countryList],
+  },
+  /*regions
+{
+  region,
+  countries:[
+
+  ]
+}
+*/
+];
 export const legendData = [
   { color: "#08519C", label: "50 or more" },
   { color: "#3182BD", label: "30 - 50" },

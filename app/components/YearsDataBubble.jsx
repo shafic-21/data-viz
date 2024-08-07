@@ -27,11 +27,8 @@ const YearsDataBubble = ({ data }) => {
       .attr("height", height)
       .attr("style", "max-width: 100%; height: auto;");
 
-    const padding = 50;
     const yearRadius = 20;
     const dataRadius = 5;
-    const expandedRadius = 100;
-
 
     const colorScale = d3
       .scaleThreshold()
@@ -83,9 +80,7 @@ const YearsDataBubble = ({ data }) => {
 
     node
       .append("circle")
-      .attr("r", (d) =>
-        d.type === "year" ? yearRadius : (d.value * dataRadius) / 100
-      )
+      .attr("r", (d) => (d.type === "year" ? yearRadius : dataRadius))
       .attr("fill", (d) => (d.type === "year" ? "white" : colorScale(d.value)));
 
     node
@@ -132,12 +127,6 @@ const YearsDataBubble = ({ data }) => {
         .restart();
     }
 
-    // // Add click and mouse leave events to nodes
-    // node
-    //   .filter((d) => d.type !== "year")
-    //   .on("click", handleClick)
-    //   .on("mouseleave", handleMouseLeave);
-
     //WHen drag starts this fixes the node position.
     function dragstarted(event) {
       if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -163,6 +152,7 @@ const YearsDataBubble = ({ data }) => {
 
     return () => {
       simulation.stop();
+      window.removeEventListener("resize", updateVisualization);
     };
   }, [data]);
 
