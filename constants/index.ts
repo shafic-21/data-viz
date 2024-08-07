@@ -52,6 +52,7 @@ export const countryList = [
   "Zimbabwe",
 ];
 
+//Please refer to the countries in the above array
 export const regionList = [
   {
     id: "africa-wide",
@@ -60,6 +61,8 @@ export const regionList = [
   },
   {
     id: "western-africa",
+    //name
+    //countries array of strings
   },
   { id: "southern-africa" },
   { id: "northern-africa" },
