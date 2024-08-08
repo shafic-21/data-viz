@@ -101,6 +101,7 @@ export const regionList = [
   },
   {
     id: "northern-africa",
+    name: "Northern Africa",
     countries: [
       { name: "Algeria", image: "/images/algeria.webp" },
       { name: "Chad", image: "/images/chad.webp" },
