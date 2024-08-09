@@ -69,15 +69,32 @@ const DynamicLineGraph = () => {
         .call(yAxis)
         .attr("transform", `translate(${dimensions.marginLeft})`);
 
+      selection
+        .append("g")
+        .selectAll("dot")
+        .data(dataset)
+        .enter()
+        .append("circle")
+        .attr("cx", (_, i) => (i * dimensions.charWidth) / (dataset.length - 1))
+        .attr("cy", (d, i) => y(d.number))
+        .attr("r", 5)
+        .attr("fill", "orange")
+        .attr(
+          "transform",
+          `translate(${dimensions.marginLeft})`
+        );
+        
+
       const Myline = line(
         //plot
         (d) => x(d.name),
         (d) => y(d.number)
       );
 
-      const defaultline = line(//line before transition
+      const defaultline = line(
+        //line before transition
         (d) => x(d.name),
-        (d) => y(d.number*0)
+        (d) => y(d.number * 0)
       );
 
       selection //line
