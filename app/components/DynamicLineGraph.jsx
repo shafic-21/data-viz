@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { axisBottom, axisLeft, select, easeElastic } from "d3";
+import { axisBottom, axisLeft, select, easeLinear, transition } from "d3";
 import { scaleLinear, scaleBand, line, max } from "d3";
 
 const dataset = [
@@ -78,12 +78,12 @@ const DynamicLineGraph = () => {
         .attr("cx", (_, i) => (i * dimensions.charWidth) / (dataset.length - 1))
         .attr("cy", (d, i) => y(d.number))
         .attr("r", 5)
-        .attr("fill", "orange")
-        .attr(
-          "transform",
-          `translate(${dimensions.marginLeft})`
-        );
-        
+        .attr("transform", `translate(${dimensions.marginLeft})`)
+        .attr("fill", "transparent")
+        .transition()
+        .duration(600)
+        .delay((_, i) => i * 100)
+        .attr("fill", "orange");
 
       const Myline = line(
         //plot
@@ -100,15 +100,24 @@ const DynamicLineGraph = () => {
       selection //line
         .append("path")
         .datum(data)
-        .attr("d", defaultline)
-        .attr("transform", `translate(${dimensions.marginLeft},0)`)
-        .transition()
-        .duration(1000)
+        // .attr("d", defaultline)
+        // .attr("transform", `translate(${dimensions.marginLeft},0)`)
+        // .transition()
+        // .duration(1000)
         .attr("fill", "none")
         .attr("stroke", "white")
         .attr("stroke-width", 1)
         .attr("d", Myline)
-        .attr("transform", `translate(${dimensions.marginLeft},0)`);
+        .attr("transform", `translate(${dimensions.marginLeft},0)`)
+        .attr("stroke-dasharray", dimensions.charWidth * 0)
+        .attr("opacity", 0)
+        .transition()
+        .duration(2000)
+        .ease(easeLinear)
+        .attr("stroke-dasharray", dimensions.charWidth * 2)
+        .duration(2000)
+        .delay(2000)
+        .attr("opacity", 1);;
     }
   }, [selection]);
 
