@@ -3,82 +3,97 @@ import readXlsxFile from "read-excel-file";
 
 export const generateDataNodesandLinks = async (filePath) => {
   const { data: rawData, fieldName } = await getExcelData(filePath);
+  let nodes = [
+    /*
+    {
+      id:string
+      type:"region"|"country"|"data-point"
+      name:""
+      value:""
+      parent:""|null
+    }
+    */
+  ];
+
+  let links = [];
 
   const years = rawData[0].slice(1);
 
-  const regions = rawData.slice(55, 60).map((cells) => {
+  const regions = rawData.slice(55, 60).map((cells, regionIndex) => {
     let regionName = cells[0];
+
+    nodes.push({
+      id: regionName,
+      type: "region",
+      name: regionName,
+      value: null,
+      parent: null,
+      code: null,
+    });
+
     let values = cells.slice(1).map((value, i) => {
       let year = years[i];
-      return {
-        id: `${regionName}`,
-        value: value ?? -1,
-        year,
-      };
+      nodes.push({
+        id: year + regionName,
+        type: "data-point",
+        name: year,
+        value: value,
+        parent: regionName,
+        code: null,
+      });
     });
-
-    let rNodes = [{ id: regionName, value: regionName, year: null }, ...values];
-    let rLists = rNodes.slice(1).map((item) => {
-      return { source: item.id, target: rNodes[0].id };
-    });
-
-    return {
-      id: regionName,
-      name: regionName,
-      region: regionName,
-      type: "region",
-      data: {
-        nodes: rNodes, //specific region nodes
-        links: rLists, //specific region links
-      },
-    };
   });
 
   const countries = rawData.slice(1, 54).map((cells) => {
     let countryName = cells[0];
-    let values = cells.slice(1).map((value, i) => {
-      let year = years[i];
-      return {
-        id: `${year}`,
-        value: value ?? -1,
-        year,
-        type: "data-point",
-      };
-    });
-
-    let cNodes = [
-      { id: countryName, value: countryName, year: null, type: "country" },
-      ...values,
-    ];
-    let cLists = cNodes.slice(1).map((item) => {
-      return { source: item.id, target: cNodes[0].id };
-    });
-
-    const region =
+    const countryRegion =
       regionList.slice(1).filter((reg) => {
-        console.log(reg);
         let ctries = reg.countries.map(({ name }) => name);
         return ctries.includes(countryName);
       })[0]?.name ?? "";
 
-    return {
-      id: countryName,
-      name: countryName,
-      region,
-      type: "country",
-      data: {
-        nodes: cNodes, //specific region nodes
-        links: cLists, //specific region links
-      },
-    };
-  });
+    let countryCode = regionList
+      .slice(1)
+      .filter((reg) => {
+        let ctries = reg.countries.map((country) => {
+          return country.name;
+        });
+        return ctries.includes(countryName);
+      })[0]
+      .countries.filter((c) => c.name == countryName)[0].code;
 
-  const nodes = [...regions, ...countries];
-  const links = countries.map((country) => {
-    return {
-      source: country.id,
-      target: country.region,
-    };
+    nodes.push({
+      id: countryName,
+      type: "country",
+      name: countryName,
+      code: countryCode,
+      value: null,
+      parent: countryRegion,
+    });
+    links.push({
+      source: countryName,
+      target: countryRegion,
+      type: "country-link",
+    });
+
+    let values = cells.slice(1).map((value, i) => {
+      let year = years[i];
+
+      links.push({
+        source: year + countryName,
+        target: countryName,
+        type: "data-link",
+      });
+
+      nodes.push({
+        id: year + countryName,
+        type: "data-point",
+        name: year,
+        value: value,
+        parent: countryName,
+        code: null,
+      });
+    });
   });
 
   return {
@@ -87,52 +102,6 @@ export const generateDataNodesandLinks = async (filePath) => {
       nodes,
       links,
     },
-  };
-};
-
-export const childrenFormat = async (filePath) => {
-  const { data: rawData, fieldName } = await getExcelData(filePath);
-
-  const years = rawData[0].slice(1);
-
-  const countries = rawData.slice(1, 54).map((cells) => {
-    let countryName = cells[0];
-    let values = cells.slice(1).map((value, i) => {
-      let year = years[i];
-      return {
-        year,
-        value: value ? value : -1,
-      };
-    });
-
-    return {
-      name: countryName,
-      children: values,
-    };
-  });
-
-  const regions = rawData.slice(55, 60).map((cells) => {
-    let regionName = cells[0];
-
-    let values = cells.slice(1).map((value, i) => {
-      let year = years[i];
-      return {
-        year,
-        value: value ? value : -1,
-      };
-    });
-
-    return {
-      name: regionName,
-      // data: values,
-      children: countries,
-    };
-  });
-
-  // console.log(rawData);
-  return {
-    fieldName,
-    data: { name: "root", children: regions },
   };
 };
 

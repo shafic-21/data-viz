@@ -15,7 +15,7 @@ export default function Home() {
       const { data, fieldName } = res;
       setData(data);
       setFieldName(fieldName);
-      console.log(data);
+      // console.log(data);
     });
   }, [data, fieldName,filePath]);
 
@@ -25,7 +25,7 @@ export default function Home() {
 
   return (
     <main className="h-screen w-screen p-8 flex flex-col relative isolate">
-      <div className="fixed z-10 w-full  ">
+      <div className="fixed -z-10 w-full  ">
         <div>
           <h1 className="text-slate-100 font-bold text-3xl pb-4">
             ReSAKSS data viz
