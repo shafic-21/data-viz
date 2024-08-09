@@ -3,7 +3,7 @@ import readXlsxFile from "read-excel-file";
 
 export const getExcelData = async () => {
   try {
-    const response = await fetch("/data/excel.xlsx");
+    const response = await fetch("/data/exp-2024-08-07_13_46_24.xlsx");
     const blob = await response.blob();
     const rows = await readXlsxFile(blob);
 

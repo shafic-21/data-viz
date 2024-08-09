@@ -73,7 +73,7 @@ const YearsDataBubble = ({ data }) => {
     const link = svg
       .append("g")
       .attr("stroke", "#999")
-      .attr("stroke-opacity", 0)
+      .attr("stroke-opacity", 0.6)
       .selectAll("line")
       .data(links)
       .join("line")
@@ -84,7 +84,7 @@ const YearsDataBubble = ({ data }) => {
     node
       .append("circle")
       .attr("r", (d) =>
-        d.type === "year" ? yearRadius : (d.value * dataRadius) / 100
+        d.type === "year" ? yearRadius : dataRadius
       )
       .attr("fill", (d) => (d.type === "year" ? "white" : colorScale(d.value)));
 
