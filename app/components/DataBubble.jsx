@@ -52,13 +52,6 @@ const YearsDataBubble = ({ data }) => {
           .id((d) => d.id)
           .distance(0)
       )
-      .force(
-        "link",
-        d3
-          .forceLink(nodes.filter((d) => d.type == "country").map((d)=>d.links))
-          .id((d) => d.id)
-          .distance(0)
-      )
       .force("charge", d3.forceManyBody().strength(-15))
       .force("center", d3.forceCenter(width / 2, height / 2))
       .force(
@@ -66,7 +59,11 @@ const YearsDataBubble = ({ data }) => {
         d3
           .forceCollide()
           .radius((d) =>
-            d.type === "region" ? regionRadius + 10 : countryRadius + 2
+            d.type === "region"
+              ? regionRadius + 10
+              : d.type == "country"
+              ? countryRadius + 2
+              : dataRadius + 2
           )
           .iterations(3)
       )
@@ -77,28 +74,18 @@ const YearsDataBubble = ({ data }) => {
     const link = svg
       .append("g")
       .attr("stroke", "#999")
-      .attr("stroke-opacity", 0)
+      .attr("stroke-opacity", 0.6)
       .selectAll("line")
       .data(links)
       .join("line")
       .attr("stroke-width", (d) => Math.sqrt(2));
 
     const node = svg.append("g").selectAll("g").data(nodes).join("g");
-    const vNode = svg
-      .append("g")
-      .selectAll("g")
-      .data(nodes.filter((d) => d.type == "country").data.nodes)
-      .join("g");
-
-    vNode
-      .append("circle")
-      .attr("r", (d) => (dataRadius))
-      .attr("fill", (d) => (d.type === "region" ? "white" : "lightblue"));
 
     node
       .append("circle")
-      .attr("r", (d) => (d.type === "region" ? regionRadius : yearRadius))
-      .attr("fill", (d) => (d.type === "region" ? "lightblue" : "yellow"));
+      .attr("r", (d) => (d.type === "region" ? regionRadius : d.type =="country"?countryRadius:dataRadius))
+      .attr("fill", (d) => (d.type === "region" ? "lightblue" :d.type=="country"? "yellow":colorScale(d.value)));
 
     // node
     //   .append("text")

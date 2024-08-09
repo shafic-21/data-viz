@@ -1,9 +1,9 @@
 "use client";
 
-import { generateDataNodesandLinks, getExcelData } from "@/utils";
+import { generateDataNodesandLinks, getExcelData,childrenFormat } from "@/utils";
 import { useCallback, useEffect, useState } from "react";
 
-import YearsDataBubble from "./components/YearsDataBubble";
+import BubbleChart from "./components/BubbleChart";
 
 export default function Home() {
   const [data, setData] = useState(null);
@@ -11,14 +11,12 @@ export default function Home() {
   const [filePath, setFilePath] = useState("/data/2024.xlsx");
 
   const fetchData = useCallback(async () => {
-    const result = await generateDataNodesandLinks(filePath).then(
-      (res) => {
-        const { data, fieldName } = res;
-        setData(data);
-        setFieldName(fieldName);
-        console.log(data)
-      }
-    );
+    const result = await generateDataNodesandLinks(filePath).then((res) => {
+      const { data, fieldName } = res;
+      setData(data);
+      setFieldName(fieldName);
+      console.log(data);
+    });
   }, [data, fieldName,filePath]);
 
   useEffect(() => {
@@ -41,7 +39,7 @@ export default function Home() {
 
       <div id="canvas" className="w-full flex-grow">
         {data ? (
-          <YearsDataBubble data={data} />
+          <BubbleChart data={data} />
         ) : (
           <div className="text-slate-400">Loading...</div>
         )}

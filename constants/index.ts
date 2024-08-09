@@ -91,13 +91,14 @@ export const regionList = [
       { name: "Mozambique", image: "/images/mozambique.png" },
       { name: "Namibia", image: "/images/namibia.png" },
       { name: "South Africa", image: "/images/south-africa.png" },
-      { name: "Swaziland", image: "/images/eswatini.webp" }, // Using Eswatini, the new name
+      { name: "Eswatini", image: "/images/eswatini.webp" }, // Using Eswatini, the new name
       { name: "Zambia", image: "/images/zambia.png" },
       { name: "Zimbabwe", image: "/images/zimbabwe.png" },
     ],
   },
   {
     id: "northern-africa",
+    name: "Northern Africa",
     countries: [
       { name: "Algeria", image: "/images/algeria.webp" },
       { name: "Egypt", image: "/images/egypt.png" },
@@ -122,7 +123,7 @@ export const regionList = [
       { name: "Rwanda", image: "/images/rwanda.jpg" },
       { name: "Seychelles", image: "/images/seychelles.webp" },
       { name: "Somalia", image: "/images/somalia.webp" },
-      { name: "South Sudan", image: "/images/south-sudan.webp" },
+      { name: "South-Sudan", image: "/images/south-sudan.webp" },
       { name: "Sudan", image: "/images/sudan.png" },
       { name: "Tanzania", image: "/images/tanzania.png" },
       { name: "Uganda", image: "/images/uganda.webp" },
@@ -136,6 +137,8 @@ export const regionList = [
         name: "Central African Republic",
         image: "/images/central-african-republic.png",
       },
+      { name: "Chad", image: "" },
+      { name: "Equatorial Guinea", image: "" },
       { name: "Cameroon", image: "/images/cameroon.png" },
       { name: "Congo, Dem. Rep. of", image: "/images/drc.jpg" },
       { name: "Congo, Republic of", image: "/images/congo.png" },

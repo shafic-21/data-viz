@@ -6,13 +6,13 @@ export const generateDataNodesandLinks = async (filePath) => {
 
   const years = rawData[0].slice(1);
 
-  const regions = rawData.slice(54, 60).map((cells) => {
+  const regions = rawData.slice(55, 60).map((cells) => {
     let regionName = cells[0];
     let values = cells.slice(1).map((value, i) => {
       let year = years[i];
       return {
         id: `${regionName}`,
-        value,
+        value: value ?? -1,
         year,
       };
     });
@@ -39,14 +39,15 @@ export const generateDataNodesandLinks = async (filePath) => {
     let values = cells.slice(1).map((value, i) => {
       let year = years[i];
       return {
-        id: `${countryName}`,
-        value,
+        id: `${year}`,
+        value: value ?? -1,
         year,
+        type: "data-point",
       };
     });
 
     let cNodes = [
-      { id: countryName, value: countryName, year: null },
+      { id: countryName, value: countryName, year: null, type: "country" },
       ...values,
     ];
     let cLists = cNodes.slice(1).map((item) => {
@@ -54,9 +55,11 @@ export const generateDataNodesandLinks = async (filePath) => {
     });
 
     const region =
-      regionList
-        .slice(1)
-        .filter((reg) => reg.countries.includes(countryName))[0]?.name ?? "";
+      regionList.slice(1).filter((reg) => {
+        console.log(reg);
+        let ctries = reg.countries.map(({ name }) => name);
+        return ctries.includes(countryName);
+      })[0]?.name ?? "";
 
     return {
       id: countryName,
@@ -84,6 +87,52 @@ export const generateDataNodesandLinks = async (filePath) => {
       nodes,
       links,
     },
+  };
+};
+
+export const childrenFormat = async (filePath) => {
+  const { data: rawData, fieldName } = await getExcelData(filePath);
+
+  const years = rawData[0].slice(1);
+
+  const countries = rawData.slice(1, 54).map((cells) => {
+    let countryName = cells[0];
+    let values = cells.slice(1).map((value, i) => {
+      let year = years[i];
+      return {
+        year,
+        value: value ? value : -1,
+      };
+    });
+
+    return {
+      name: countryName,
+      children: values,
+    };
+  });
+
+  const regions = rawData.slice(55, 60).map((cells) => {
+    let regionName = cells[0];
+
+    let values = cells.slice(1).map((value, i) => {
+      let year = years[i];
+      return {
+        year,
+        value: value ? value : -1,
+      };
+    });
+
+    return {
+      name: regionName,
+      // data: values,
+      children: countries,
+    };
+  });
+
+  // console.log(rawData);
+  return {
+    fieldName,
+    data: { name: "root", children: regions },
   };
 };
 
