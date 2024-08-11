@@ -1,60 +1,125 @@
-import { countryList } from "@/constants";
+import { countryList, regionList } from "@/constants";
 import readXlsxFile from "read-excel-file";
 
-export const getExcelData = async () => {
+export const generateDataNodesandLinks = async (filePath) => {
+  const { data: rawData, fieldName } = await getExcelData(filePath);
+  let nodes = [
+    /*
+    {
+      id:string
+      type:"region"|"country"|"data-point"
+      name:""
+      value:""
+      parent:""|null
+    }
+    */
+  ];
+
+  let links = [];
+
+  const years = rawData[0].slice(1);
+
+  const regions = rawData.slice(55, 60).map((cells, regionIndex) => {
+    let regionName = cells[0];
+
+    nodes.push({
+      id: regionName,
+      type: "region",
+      name: regionName,
+      value: null,
+      parent: null,
+      code: null,
+    });
+
+    let values = cells.slice(1).map((value, i) => {
+      let year = years[i];
+      nodes.push({
+        id: year + regionName,
+        type: "data-point",
+        name: year,
+        value: value,
+        parent: regionName,
+        code: null,
+      });
+    });
+  });
+
+  const countries = rawData.slice(1, 54).map((cells) => {
+    let countryName = cells[0];
+    const countryRegion =
+      regionList.slice(1).filter((reg) => {
+        let ctries = reg.countries.map(({ name }) => name);
+        return ctries.includes(countryName);
+      })[0]?.name ?? "";
+
+    let countryCode = regionList
+      .slice(1)
+      .filter((reg) => {
+        let ctries = reg.countries.map((country) => {
+          return country.name;
+        });
+        return ctries.includes(countryName);
+      })[0]
+      .countries.filter((c) => c.name == countryName)[0].code;
+
+    nodes.push({
+      id: countryName,
+      type: "country",
+      name: countryName,
+      code: countryCode,
+      value: null,
+      parent: countryRegion,
+    });
+    links.push({
+      source: countryName,
+      target: countryRegion,
+      type: "country-link",
+    });
+
+    let values = cells.slice(1).map((value, i) => {
+      let year = years[i];
+
+      links.push({
+        source: year + countryName,
+        target: countryName,
+        type: "data-link",
+      });
+
+      nodes.push({
+        id: year + countryName,
+        type: "data-point",
+        name: year,
+        value: value,
+        parent: countryName,
+        code: null,
+      });
+    });
+  });
+
+  return {
+    fieldName,
+    data: {
+      nodes,
+      links,
+    },
+  };
+};
+
+//This is the function that extracts data from the excel file
+async function getExcelData(filePath) {
+  // "/data/2024.xlsx";
   try {
-    const response = await fetch("/data/exp-2024-08-07_13_46_24.xlsx");
+    const response = await fetch(filePath);
     const blob = await response.blob();
     const rows = await readXlsxFile(blob);
 
     const [headers, ...dataRows] = rows;
-    const years = dataRows[1].slice(1).map((year) => {
-      return {
-        id: String(year),
-        value: Number(year),
-        year: String(year),
-        type: "year",
-      };
-    });
-
-    console.log(dataRows,years)
-
-   const actualData = years.flatMap((yr) => {
-     const yearIndex = dataRows[1].indexOf(Number(yr.id));
-     return dataRows
-       .slice(2)
-       .filter((row) => countryList.includes(row[0]))
-       .map((row) => {
-         return {
-           id: `${yr.id}-${row[0]}`,
-           value: Number(row[yearIndex]) || -1,
-           year: yr.id,
-           country: row[0],
-           type: "data-point",
-         };
-       });
-   });
-
-      console.log(actualData)
-
-    const nodes = [...years, ...actualData];
-
-    const links = actualData.map((dataPoint) => {
-      return {
-        source: dataPoint.id,
-        target: dataPoint.year,
-      };
-    });
 
     return {
-      fieldName: String(headers[0]),
-      data: {
-        nodes,
-        links,
-      },
+      fieldName: String(headers[0]), //I get the field name.
+      data: dataRows.slice(1, 61), //Here I slice the data to make sure i get the countries and regions only
     };
   } catch (error) {
-    console.error("Error reading the Excel file:", error);
-    return [];
+    throw new Error("Error reading the Excel file:", error);
   }
-};
+}

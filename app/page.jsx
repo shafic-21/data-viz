@@ -1,29 +1,31 @@
 "use client";
 
-import { getExcelData } from "@/utils";
+import { generateDataNodesandLinks, getExcelData,childrenFormat } from "@/utils";
 import { useCallback, useEffect, useState } from "react";
 
-import YearsDataBubble from "./components/YearsDataBubble";
+import BubbleChart from "./components/BubbleChart";
 
 export default function Home() {
   const [data, setData] = useState(null);
   const [fieldName, setFieldName] = useState(null);
+  const [filePath, setFilePath] = useState("/data/2024.xlsx");
 
   const fetchData = useCallback(async () => {
-    const result = await getExcelData().then((res) => {
+    const result = await generateDataNodesandLinks(filePath).then((res) => {
       const { data, fieldName } = res;
       setData(data);
       setFieldName(fieldName);
+      // console.log(data);
     });
-  }, [data, fieldName]);
+  }, [data, fieldName,filePath]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [filePath]);
 
   return (
     <main className="h-screen w-screen p-8 flex flex-col relative isolate">
-      <div className="fixed z-10 w-full  ">
+      <div className="fixed -z-10 w-full  ">
         <div>
           <h1 className="text-slate-100 font-bold text-3xl pb-4">
             ReSAKSS data viz
@@ -37,7 +39,7 @@ export default function Home() {
 
       <div id="canvas" className="w-full flex-grow">
         {data ? (
-          <YearsDataBubble data={data} />
+          <BubbleChart data={data} />
         ) : (
           <div className="text-slate-400">Loading...</div>
         )}

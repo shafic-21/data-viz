@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/components/NewBubbleChart.jsx", "utils/index.js", "app/page.jsx", "app/components/BubbleChart.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/components/NewBubbleChart.jsx", "utils/index.js", "app/page.jsx", "app/components/BubbleChart.jsx", "app/components/DynamicLineGraph.jsx"],
   "exclude": ["node_modules"]
 }

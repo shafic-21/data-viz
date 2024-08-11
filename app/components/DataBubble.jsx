@@ -6,19 +6,16 @@ import * as d3 from "d3";
 const YearsDataBubble = ({ data }) => {
   const svgRef = useRef(null);
   const containerRef = useRef(null);
-
-  console.log(data);
+  const [width, setWidth] = useState(null);
+  const [height, setHeight] = useState(null);
 
   useEffect(() => {
-    if (!data || !svgRef.current) return;
-
-    const container = containerRef.current;
+    if (!data || !svgRef.current || !containerRef) return;
+    setWidth(containerRef.current?.clientWidth);
+    setHeight(containerRef.current?.clientHeight);
     const svg = d3.select(svgRef.current);
 
     svg.selectAll("*").remove();
-
-    let width = container.clientWidth;
-    let height = container.clientHeight;
 
     svg
       .attr("viewBox", [0, 0, width, height])
@@ -27,11 +24,9 @@ const YearsDataBubble = ({ data }) => {
       .attr("height", height)
       .attr("style", "max-width: 100%; height: auto;");
 
-    const padding = 50;
-    const yearRadius = 20;
+    const countryRadius = 10;
+    const regionRadius = 30;
     const dataRadius = 5;
-    const expandedRadius = 100;
-
 
     const colorScale = d3
       .scaleThreshold()
@@ -63,7 +58,13 @@ const YearsDataBubble = ({ data }) => {
         "collision",
         d3
           .forceCollide()
-          .radius((d) => (d.type === "year" ? yearRadius : dataRadius + 2))
+          .radius((d) =>
+            d.type === "region"
+              ? regionRadius + 10
+              : d.type == "country"
+              ? countryRadius + 2
+              : dataRadius + 2
+          )
           .iterations(3)
       )
       .force("x", d3.forceX())
@@ -83,22 +84,20 @@ const YearsDataBubble = ({ data }) => {
 
     node
       .append("circle")
-      .attr("r", (d) =>
-        d.type === "year" ? yearRadius : dataRadius
-      )
-      .attr("fill", (d) => (d.type === "year" ? "white" : colorScale(d.value)));
+      .attr("r", (d) => (d.type === "region" ? regionRadius : d.type =="country"?countryRadius:dataRadius))
+      .attr("fill", (d) => (d.type === "region" ? "lightblue" :d.type=="country"? "yellow":colorScale(d.value)));
 
-    node
-      .append("text")
-      .text((d) => (d.type == "year" ? d.year : ""))
-      .attr("font-size", "10px")
-      .attr("text-anchor", "middle")
-      .attr("dy", "0.35em")
-      .attr("fill", "#000");
+    // node
+    //   .append("text")
+    //   .text((d) => (d.type == "year" ? d.year : ""))
+    //   .attr("font-size", "10px")
+    //   .attr("text-anchor", "middle")
+    //   .attr("dy", "0.35em")
+    //   .attr("fill", "#000");
 
-    node
-      .append("title")
-      .text((d) => (d.type === "year" ? d.year : `${d.id}: ${d.value}`));
+    // node
+    //   .append("title")
+    //   .text((d) => (d.type === "region" ? d.region : `${d.id}: ${d.name}`));
 
     node.call(
       d3
@@ -118,25 +117,19 @@ const YearsDataBubble = ({ data }) => {
       node.attr("transform", (d) => `translate(${d.x},${d.y})`);
     });
 
-    function updateVisualization() {
-      width = container.clientWidth;
-      height = container.clientHeight;
+    // function updateVisualization() {
+    //   width = container.clientWidth;
+    //   height = container.clientHeight;
 
-      svg.attr("viewBox", `0 0 ${width} ${height}`);
+    //   svg.attr("viewBox", `0 0 ${width} ${height}`);
 
-      simulation
-        .force("center", d3.forceCenter(width / 2, height / 2))
-        .force("x", d3.forceX(width / 2).strength(0.1))
-        .force("y", d3.forceY(height / 2).strength(0.1))
-        .alpha(0.3)
-        .restart();
-    }
-
-    // // Add click and mouse leave events to nodes
-    // node
-    //   .filter((d) => d.type !== "year")
-    //   .on("click", handleClick)
-    //   .on("mouseleave", handleMouseLeave);
+    //   simulation
+    //     .force("center", d3.forceCenter(width / 2, height / 2))
+    //     .force("x", d3.forceX(width / 2).strength(0.1))
+    //     .force("y", d3.forceY(height / 2).strength(0.1))
+    //     .alpha(0.3)
+    //     .restart();
+    // }
 
     //WHen drag starts this fixes the node position.
     function dragstarted(event) {
@@ -158,13 +151,14 @@ const YearsDataBubble = ({ data }) => {
       event.subject.fy = null;
     }
 
-    updateVisualization();
-    window.addEventListener("resize", updateVisualization);
+    // updateVisualization();
+    // window.addEventListener("resize", updateVisualization);
 
     return () => {
       simulation.stop();
+      // window.removeEventListener("resize", updateVisualization);
     };
-  }, [data]);
+  }, [data, width, height]);
 
   return (
     <div
