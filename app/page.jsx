@@ -4,6 +4,7 @@ import { generateDataNodesandLinks, getExcelData,childrenFormat } from "@/utils"
 import { useCallback, useEffect, useState } from "react";
 
 import BubbleChart from "./components/BubbleChart";
+import Sidebar from "./components/Sidebar";
 
 export default function Home() {
   const [data, setData] = useState(null);
@@ -37,13 +38,13 @@ export default function Home() {
         </div>
       </div>
 
-      <div id="canvas" className="w-full flex-grow">
+      <div id="canvas" className="w-full flex gap-12 flex-grow">
         {data ? (
           <BubbleChart data={data} />
         ) : (
           <div className="text-slate-400">Loading...</div>
         )}
-      </div>
+        <Sidebar/>      </div>
     </main>
   );
 }
