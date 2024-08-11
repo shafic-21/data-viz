@@ -1,29 +1,23 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { axisBottom, axisLeft, select, easeLinear, transition, curveCatmullRom } from "d3";
+import {
+  axisBottom,
+  axisLeft,
+  select,
+  easeLinear,
+  transition,
+  curveCatmullRom,
+} from "d3";
 import { scaleLinear, scaleBand, line, max } from "d3";
 
-const dataset = [
-  //testing with eastern values
-  { name: "Burundi", number: 0.9 },
-  { name: "Comoros", number: 0.4 },
-  { name: "Djibouti", number: 10 },
-  { name: "Eritrea", number: 10 },
-  { name: "Ethiopia", number: 39.5 },
-  { name: "Kenya", number: 19.9 },
-  { name: "Madagascar", number: 3.1 },
-  { name: "Malawi", number: 2.4 },
-  { name: "Mauritius", number: 0.4 },
-  { name: "Mozambique", number: 10 },
-  { name: "Rwanda", number: 3.2 },
-  { name: "Seychelles", number: 0.1 },
-  { name: "Somalia", number: 10 },
-  { name: "South Sudan", number: 10 },
-  { name: "Tanzania", number: 16.2 },
-  { name: "Uganda", number: 10.6 },
-  { name: "Zambia", number: 0.9 },
-  { name: "Zimbabwe", number: 10 },
-];
+import {
+  datasets,
+  northernData,
+  easternData,
+  westernData,
+  southernData,
+  centralData,
+} from "@/constants";
 
 const DynamicLineGraph = () => {
   const title = "this is a demo title"; //title
@@ -31,32 +25,34 @@ const DynamicLineGraph = () => {
   const xlabel = "Countries";
   const svgRef = useRef(null);
 
-  const [data, setData] = useState(dataset); //for changing the dataset passed
+  const [data, setData] = useState(datasets[1].value); //for changing the dataset passed
   const [selection, setSelection] = useState(null);
 
   const dimensions = {
     //the actual graph plot
-    charWidth: 1000,
+    charWidth: 1200,
     charHeight: 400,
     marginLeft: 50,
   };
 
   const maxValue = max(data, (d) => d.number); //dynamic height
 
-  let y = scaleLinear().domain([0, maxValue*1.1]).range([dimensions.charHeight, 0]); //vertical scale
+  let y = scaleLinear()
+    .domain([0, maxValue * 1.1])
+    .range([dimensions.charHeight, 0]); //vertical scale
 
-  let x = scaleBand() //horizontal scale
-    .domain(data.map((d) => d.name))
-    .range([0, dimensions.charWidth])
-    .paddingInner(1);
+  let x = scaleLinear() //horizontal scale
+    .domain([1980, 2022])
+    .range([0, dimensions.charWidth]);
 
   const yAxis = axisLeft(y).tickFormat((d) => `${d}K`); //template string for potential units
-  const xAxis = axisBottom(x);
+  const xAxis = axisBottom(x).ticks(22);
 
   useEffect(() => {
     if (!selection) {
       setSelection(select(svgRef.current));
     } else {
+      selection.selectAll("*").remove();
       selection
         .append("g") //x axis
         .call(xAxis)
@@ -72,10 +68,10 @@ const DynamicLineGraph = () => {
       selection
         .append("g")
         .selectAll("dot")
-        .data(dataset)
+        .data(data)
         .enter()
         .append("circle")
-        .attr("cx", (_, i) => (i * dimensions.charWidth) / (dataset.length - 1))
+        .attr("cx", (_, i) => (i * dimensions.charWidth) / (data.length - 1))
         .attr("cy", (d, i) => y(d.number))
         .attr("r", 5)
         .attr("transform", `translate(${dimensions.marginLeft})`)
@@ -89,7 +85,7 @@ const DynamicLineGraph = () => {
         //plot
         (d) => x(d.name),
         (d) => y(d.number)
-      ).curve(curveCatmullRom.alpha(0.5));//changes rounding of the curve
+      ).curve(curveCatmullRom.alpha(0.5)); //changes rounding of the curve
 
       const defaultline = line(
         //line before transition
@@ -112,19 +108,23 @@ const DynamicLineGraph = () => {
         .attr("stroke-dasharray", dimensions.charWidth * 0)
         .attr("opacity", 0)
         .transition()
-        .duration(2000)
+        .duration(10000)
+        .delay(4000)
         .ease(easeLinear)
-        .attr("stroke-dasharray", dimensions.charWidth * 2)
-        .duration(2000)
-        .delay(2000)
-        .attr("opacity", 1);;
+        .attr("stroke-dasharray", dimensions.charWidth * 10)
+
+        .attr("opacity", 1);
     }
-  }, [selection]);
+  }, [selection, data]);
+
+  const handleClick = () => {
+    alert("hello");
+  };
 
   return (
     <div className="">
       {/* chart title */}
-      <h1 className="uppercase text-center mb-20 font-bold text-4xl">
+      <h1 className="uppercase text-center mb-10 font-bold text-4xl">
         {title}
       </h1>
       <div className="flex">
@@ -139,6 +139,18 @@ const DynamicLineGraph = () => {
           ></svg>
           <h2 className="text-center mt-4">{xlabel}</h2>
         </div>
+      </div>
+      <div className="flex gap-8 justify-center mt-10">
+        {datasets.map(({ label, value }) => (
+          <button
+            onClick={() => {
+              setData(value);
+            }}
+            className="border px-4 py-2 rounded-full hover:bg-slate-300 hover:text-black "
+          >
+            {label}
+          </button>
+        ))}
       </div>
     </div>
   );
