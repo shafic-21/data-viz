@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { axisBottom, axisLeft, select, easeLinear, transition } from "d3";
+import { axisBottom, axisLeft, select, easeLinear, transition, curveCatmullRom } from "d3";
 import { scaleLinear, scaleBand, line, max } from "d3";
 
 const dataset = [
@@ -89,7 +89,7 @@ const DynamicLineGraph = () => {
         //plot
         (d) => x(d.name),
         (d) => y(d.number)
-      );
+      ).curve(curveCatmullRom.alpha(0.5));//changes rounding of the curve
 
       const defaultline = line(
         //line before transition
