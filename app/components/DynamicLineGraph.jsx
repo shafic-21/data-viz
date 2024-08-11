@@ -43,7 +43,7 @@ const DynamicLineGraph = () => {
 
   const maxValue = max(data, (d) => d.number); //dynamic height
 
-  let y = scaleLinear().domain([0, maxValue]).range([dimensions.charHeight, 0]); //vertical scale
+  let y = scaleLinear().domain([0, maxValue*1.1]).range([dimensions.charHeight, 0]); //vertical scale
 
   let x = scaleBand() //horizontal scale
     .domain(data.map((d) => d.name))
