@@ -431,3 +431,168 @@ export const datasets: { label: string; value: any }[] = [
     value: southernData,
   },
 ];
+
+//resakss data
+
+export const resakssData: { name: string; path: string }[] = [
+  {
+    name: "yield-milk-(whole-fresh-cow-kilograms-per-head)",
+    path: "/data/resakss/agricultural-transformation-and-growth/yield-milk-(whole-fresh-cow-kilograms-per-head).xlsx",
+  },
+  {
+    name: "yield-cassava-(tons-per-hectare)",
+    path: "/data/resakss/agricultural-transformation-and-growth/yield-cassava-(tons-per-hectare).xlsx",
+  },
+  {
+    name: "intra-african-agricultural-trade-imports-(constant-2015-USD-billion)",
+    path: "/data/resakss/agricultural-transformation-and-growth/intra-african-agricultural-trade-imports-(constant-2015-USD-billion).xlsx",
+  },
+  {
+    name: "intra-african-agricultural-trade-exports-(constant-2015-US$-billion)",
+    path: "/data/resakss/agricultural-transformation-and-growth/intra-african-agricultural-trade-exports-(constant-2015-US$-billion).xlsx",
+  },
+  {
+    name: "domestic-food-price-volatility-(index)",
+    path: "/data/resakss/agricultural-transformation-and-growth/domestic-food-price-volatility-(index).xlsx",
+  },
+  {
+    name: "agriculture-value-added-per-worker-(constant-2015-USD)",
+    path: "/data/resakss/agricultural-transformation-and-growth/agriculture-value-added-per-worker-(constant-2015-USD).xlsx",
+  },
+  {
+    name: "agriculture-value-added-per-hectare-of-agricultural-land-(constant-2015-USD)",
+    path: "/data/resakss/agricultural-transformation-and-growth/agriculture-value-added-per-hectare-of-agricultural-land-(constant-2015-USD).xlsx",
+  },
+  {
+    name: "agriculture-production-index-number-(2014-2016=100)-(Int.$)",
+    path: "/data/resakss/agricultural-transformation-and-growth/agriculture-production-index-number-(2014-2016=100)-(Int.$).xlsx",
+  },
+  {
+    name: "yield-yams-(tons-per-hectare)",
+    path: "/data/resakss/agricultural-transformation-and-growth/yield-yams-(tons-per-hectare).xlsx",
+  },
+  {
+    name: "yield-meat-(cattle-kilograms-per-head)",
+    path: "/data/resakss/agricultural-transformation-and-growth/yield-meat-(cattle-kilograms-per-head).xlsx",
+  },
+  {
+    name: "yield-maize-(tons-per-hectare)",
+    path: "/data/resakss/agricultural-transformation-and-growth/yield-maize-(tons-per-hectare).xlsx",
+  },
+  {
+    name: "cereal-import-dependency-ratio-(%)",
+    path: "/data/resakss/economic-growth-and-inclusive-development/cereal-import-dependency-ratio-(%).xlsx",
+  },
+  {
+    name: "prevalence-of-wasting-(%-of-children-under-5)",
+    path: "/data/resakss/economic-growth-and-inclusive-development/prevalence-of-wasting-(%-of-children-under-5).xlsx",
+  },
+  {
+    name: "prevalence-of-underweight-weight-for-age-(%-of-children-under-5)",
+    path: "/data/resakss/economic-growth-and-inclusive-development/prevalence-of-underweight-weight-for-age-(%-of-children-under-5).xlsx",
+  },
+  {
+    name: "prevalence-of-stunting-height-for-age-(%-of-children-under-5)",
+    path: "/data/resakss/economic-growth-and-inclusive-development/prevalence-of-stunting-height-for-age-(%-of-children-under-5).xlsx",
+  },
+  {
+    name: "prevalance-of-undernourishment-(%-of-population)",
+    path: "/data/resakss/economic-growth-and-inclusive-development/prevalance-of-undernourishment-(%-of-population).xlsx",
+  },
+  {
+    name: "poverty-gap-at-$2point15-a-day-(2017-PPP)-(%)",
+    path: "/data/resakss/economic-growth-and-inclusive-development/poverty-gap-at-$2point15-a-day-(2017-PPP)-(%).xlsx",
+  },
+  {
+    name: "poverty-headcount-ratio-at-$2point15-a-day-(2017-PPP)-(%)",
+    path: "/data/resakss/economic-growth-and-inclusive-development/poverty-headcount-ratio-at-$2point15-a-day-(2017-PPP)-(%).xlsx",
+  },
+  {
+    name: "household-consumption-expenditure-per-capita-(constant-2015-USD)",
+    path: "/data/resakss/economic-growth-and-inclusive-development/household-consumption-expenditure-per-capita-(constant-2015-USD).xlsx",
+  },
+  {
+    name: "GINI-index",
+    path: "/data/resakss/economic-growth-and-inclusive-development/GINI-index.xlsx",
+  },
+  {
+    name: "GDP-per-capita-(constant-2015-USD)",
+    path: "/data/resakss/economic-growth-and-inclusive-development/GDP-per-capita-(constant-2015-USD).xlsx",
+  },
+  {
+    name: "employment-rate-(%-of-population-15+-years)",
+    path: "/data/resakss/economic-growth-and-inclusive-development/employment-rate-(%-of-population-15+-years).xlsx",
+  },
+  {
+    name: "employment-rate-(%-of-labor-force-15-64-years)",
+    path: "/data/resakss/economic-growth-and-inclusive-development/employment-rate-(%-of-labor-force-15-64-years).xlsx",
+  },
+  {
+    name: "agricultural-value-added-(%-GDP)",
+    path: "/data/resakss/other/agricultural-value-added-(%-GDP).xlsx",
+  },
+  {
+    name: "total-fertilizer-consumption-(kilogram-per-hectare)",
+    path: "/data/resakss/other/total-fertilizer-consumption-(kilogram-per-hectare).xlsx",
+  },
+  {
+    name: "ratio-of-agricultural-exports-to-agricultural-imports",
+    path: "/data/resakss/other/ratio-of-agricultural-exports-to-agricultural-imports.xlsx",
+  },
+  {
+    name: "gross-domestic-product-(constant-2015-US$-billion)",
+    path: "/data/resakss/other/gross-domestic-product-(constant-2015-US$-billion).xlsx",
+  },
+  {
+    name: "global-hunger-index",
+    path: "/data/resakss/other/global-hunger-index.xlsx",
+  },
+  {
+    name: "general-government-gross-revenue-(%-of-GDP)",
+    path: "/data/resakss/other/general-government-gross-revenue-(%-of-GDP).xlsx",
+  },
+  {
+    name: "general-government-gross-debt-(%-of-GDP)",
+    path: "/data/resakss/other/general-government-gross-debt-(%-of-GDP).xlsx",
+  },
+  {
+    name: "emergency-food-aid-(%-total-ODA)",
+    path: "/data/resakss/other/emergency-food-aid-(%-total-ODA).xlsx",
+  },
+  {
+    name: "annual-inflation-GDP-deflator-(%)",
+    path: "/data/resakss/other/annual-inflation-GDP-deflator-(%).xlsx",
+  },
+  {
+    name: "agriculture-value-added-growth-rate-(%)",
+    path: "/data/resakss/other/agriculture-value-added-growth-rate-(%).xlsx",
+  },
+  {
+    name: "agricultural-imports-(%-of-total-merchandise-imports)",
+    path: "/data/resakss/other/agricultural-imports-(%-of-total-merchandise-imports).xlsx",
+  },
+  {
+    name: "agricultural-exports-(%-of-total-merchandise-exports)",
+    path: "/data/resakss/other/agricultural-exports-(%-of-total-merchandise-exports).xlsx",
+  },
+  {
+    name: "agricultural-ODA-(%-total-ODA)",
+    path: "/data/resakss/other/agricultural-ODA-(%-total-ODA).xlsx",
+  },
+  {
+    name: "agricultural-ODA-(%-of-commitments)",
+    path: "/data/resakss/other/agricultural-ODA-(%-of-commitments).xlsx",
+  },
+  {
+    name: "government-agriculture-expenditure-(constant-2015-US$-billion)",
+    path: "/data/resakss/systemic-capacity-to-deliver-results/government-agriculture-expenditure-(constant-2015-US$-billion).xlsx",
+  },
+  {
+    name: "government-agriculture-expenditure-(%-of-total-expenditure)",
+    path: "/data/resakss/systemic-capacity-to-deliver-results/government-agriculture-expenditure-(%-of-total-expenditure).xlsx",
+  },
+  {
+    name: "government-agriculture-expenditure-(%-of-agriculture-value-added)",
+    path: "/data/resakss/systemic-capacity-to-deliver-results/government-agriculture-expenditure-(%-of-agriculture-value-added).xlsx",
+  },
+];
