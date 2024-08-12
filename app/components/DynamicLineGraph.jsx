@@ -8,21 +8,14 @@ import {
   transition,
   curveCatmullRom,
 } from "d3";
-import { scaleLinear, scaleBand, line, max } from "d3";
+import { scaleLinear, line, max } from "d3";
 
-import {
-  datasets,
-  northernData,
-  easternData,
-  westernData,
-  southernData,
-  centralData,
-} from "@/constants";
+import { datasets } from "@/constants";
 
 const DynamicLineGraph = () => {
-  const title = "this is a demo title"; //title
+  const title = "agricultural Trend"; //title
   const ylabel = "Values";
-  const xlabel = "Countries";
+  const xlabel = "Years";
   const svgRef = useRef(null);
 
   const [data, setData] = useState(datasets[1].value); //for changing the dataset passed
@@ -30,23 +23,23 @@ const DynamicLineGraph = () => {
 
   const dimensions = {
     //the actual graph plot
-    charWidth: 1200,
-    charHeight: 400,
+    charWidth: 300,
+    charHeight: 300,
     marginLeft: 50,
   };
 
   const maxValue = max(data, (d) => d.number); //dynamic height
 
-  let y = scaleLinear()
+  let y = scaleLinear()//vertical scale
     .domain([0, maxValue * 1.1])
-    .range([dimensions.charHeight, 0]); //vertical scale
+    .range([dimensions.charHeight, 0]); 
 
   let x = scaleLinear() //horizontal scale
     .domain([1980, 2022])
     .range([0, dimensions.charWidth]);
 
   const yAxis = axisLeft(y).tickFormat((d) => `${d}K`); //template string for potential units
-  const xAxis = axisBottom(x).ticks(22);
+  const xAxis = axisBottom(x).ticks(10);
 
   useEffect(() => {
     if (!selection) {
@@ -65,7 +58,7 @@ const DynamicLineGraph = () => {
         .call(yAxis)
         .attr("transform", `translate(${dimensions.marginLeft})`);
 
-      selection
+      selection//dots
         .append("g")
         .selectAll("dot")
         .data(data)
@@ -73,7 +66,7 @@ const DynamicLineGraph = () => {
         .append("circle")
         .attr("cx", (_, i) => (i * dimensions.charWidth) / (data.length - 1))
         .attr("cy", (d, i) => y(d.number))
-        .attr("r", 5)
+        .attr("r", 4)
         .attr("transform", `translate(${dimensions.marginLeft})`)
         .attr("fill", "transparent")
         .transition()
@@ -96,10 +89,6 @@ const DynamicLineGraph = () => {
       selection //line
         .append("path")
         .datum(data)
-        // .attr("d", defaultline)
-        // .attr("transform", `translate(${dimensions.marginLeft},0)`)
-        // .transition()
-        // .duration(1000)
         .attr("fill", "none")
         .attr("stroke", "white")
         .attr("stroke-width", 1)
@@ -111,42 +100,39 @@ const DynamicLineGraph = () => {
         .duration(10000)
         .delay(4000)
         .ease(easeLinear)
-        .attr("stroke-dasharray", dimensions.charWidth * 10)
+        .attr("stroke-dasharray", dimensions.charWidth * 30)
 
         .attr("opacity", 1);
     }
   }, [selection, data]);
 
-  const handleClick = () => {
-    alert("hello");
-  };
-
   return (
-    <div className="">
+    <div className="text-slate-400">
       {/* chart title */}
-      <h1 className="uppercase text-center mb-10 font-bold text-4xl">
+      <h1 className="uppercase text-center mb-10 font-bold text-2xl">
         {title}
       </h1>
-      <div className="flex">
-        <div className="flex flex-col justify-center">
-          <h2 className="-rotate-90 h-fit w-full">{ylabel}</h2>
-        </div>
-        <div className="">
+      <div className="">
+        <div className="relative flex items-center">
           <svg
             ref={svgRef}
             width={dimensions.charWidth + 100}
             height={dimensions.charHeight + 20}
+            className="ps-6"
           ></svg>
-          <h2 className="text-center mt-4">{xlabel}</h2>
+          <div className="absolute -rotate-90">{ylabel}</div>
         </div>
+        <h2 className="text-center ps-6">{xlabel}</h2>{" "}
       </div>
-      <div className="flex gap-8 justify-center mt-10">
+      <div className="flex flex-wrap gap-8 justify-center mt-10 ">
         {datasets.map(({ label, value }) => (
           <button
             onClick={() => {
               setData(value);
             }}
-            className="border px-4 py-2 rounded-full hover:bg-slate-300 hover:text-black "
+            className={`first:mx-32 px-4 py-2 rounded-full hover:bg-slate-300 hover:text-black border text-xs ${
+              data == value ? "bg-slate-300" : ""
+            }`}
           >
             {label}
           </button>

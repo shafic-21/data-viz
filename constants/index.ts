@@ -174,7 +174,6 @@ export const legendData = [
   { color: "#808080", label: "no data" },
 ];
 
-
 //eastern curve data
 export const easternData = [
   { name: "1980", number: 0.9 },
@@ -268,7 +267,7 @@ export const westernData = [
   { name: "2021", number: 30.7 },
   { name: "2022", number: 16.8 },
 ];
- //southern curve data
+//southern curve data
 export const southernData = [
   { name: "1980", number: 12.7 },
   { name: "1981", number: 5.3 },
@@ -412,23 +411,23 @@ export const northernData = [
 
 export const datasets: { label: string; value: any }[] = [
   {
-    label: "Country 1",
+    label: "Northern",
     value: northernData,
   },
   {
-    label: "Country 2",
-    value: easternData,
-  },
-  {
-    label: "Country 3",
+    label: "Western",
     value: westernData,
   },
   {
-    label: "Country 4",
-    value: southernData,
+    label: "Central",
+    value: centralData,
   },
   {
-    label: "Country 5",
-    value: centralData,
+    label: "Eastern",
+    value: easternData,
+  },
+  {
+    label: "Southern",
+    value: southernData,
   },
 ];
