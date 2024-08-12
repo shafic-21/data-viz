@@ -411,23 +411,23 @@ export const northernData = [
 
 export const datasets: { label: string; value: any }[] = [
   {
-    label: "Northern",
+    label: "N",
     value: northernData,
   },
   {
-    label: "Western",
+    label: "W",
     value: westernData,
   },
   {
-    label: "Central",
+    label: "C",
     value: centralData,
   },
   {
-    label: "Eastern",
+    label: "E",
     value: easternData,
   },
   {
-    label: "Southern",
+    label: "S",
     value: southernData,
   },
 ];

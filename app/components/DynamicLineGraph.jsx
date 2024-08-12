@@ -124,13 +124,13 @@ const DynamicLineGraph = () => {
         </div>
         <h2 className="text-center ps-6">{xlabel}</h2>{" "}
       </div>
-      <div className="flex flex-wrap gap-8 justify-center mt-10 ">
+      <div className="flex flex-wrap gap-8 justify-center mt-10 w-40 mx-auto">
         {datasets.map(({ label, value }) => (
           <button
             onClick={() => {
               setData(value);
             }}
-            className={`first:mx-32 px-4 py-2 rounded-full hover:bg-slate-300 hover:text-black border text-xs ${
+            className={`first:mx-16 h-6 w-6 rounded-full hover:bg-slate-300 hover:text-black border text-xs ${
               data == value ? "bg-slate-300" : ""
             }`}
           >
