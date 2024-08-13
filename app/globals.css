@@ -1,22 +1,4 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@layer components {
-  .country-info {
-    @apply flex flex-col items-center text-lg font-medium text-slate-300;
-  }
-  /* .country-value {
-    @apply flex flex-col items-center text-lg font-medium text-slate-300;
-  }
-  .country-name {
-    @apply flex flex-col items-center text-xl font-medium text-slate-100;
-  } */
-  .svg {
-    @apply border-2 border-black;
-  }
-}
-
-.country-name {
-  color: "white";
-}
+  

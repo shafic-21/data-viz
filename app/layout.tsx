@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
+import Header from "@/app/components/Header"
 
 const manrope = Manrope({ subsets: ["latin"] });
 
@@ -16,7 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${manrope.className} bg-slate-950`}>{children}</body>
+      <body className={`${manrope.className} bg-slate-950 h-screen`}>
+        <Header/>
+        {children}
+        </body>
     </html>
   );
 }

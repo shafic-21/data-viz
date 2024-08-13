@@ -25,26 +25,15 @@ export default function Home() {
   }, [filePath]);
 
   return (
-    <main className="h-screen w-screen p-8 flex flex-col relative isolate">
-      <div className="fixed -z-10 w-full  ">
-        <div>
-          <h1 className="text-slate-100 font-bold text-3xl pb-4">
-            ReSAKSS data viz
-          </h1>
-
-          <h2 className="py-2  w-fit  mb-4 rounded-full text-sm font-semibold text-green-600">
-            {fieldName && fieldName}
-          </h2>
-        </div>
-      </div>
-
-      <div id="canvas" className="w-full flex gap-12 flex-grow">
+    <main className="p-8 flex flex-col relative isolate">
+     
+      {/* <div className="w-full h-screen flex gap-12 bg-red-300">
         {data ? (
           <BubbleChart data={data} />
         ) : (
           <div className="text-slate-400">Loading...</div>
         )}
-        <Sidebar/>      </div>
+        <Sidebar/>      </div> */}
     </main>
   );
 }
