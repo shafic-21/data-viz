@@ -10,6 +10,7 @@ import { useCallback, useEffect, useState } from "react";
 import BubbleChart from "../components/BubbleChart";
 
 import { useFileStore, useYearListStore } from "@/store";
+import { LineGraph } from "@/components/LineGraph";
 
 export default function Home() {
   const [data, setData] = useState(null);
@@ -33,13 +34,16 @@ export default function Home() {
   }, [filePath]);
 
   return (
-    <main className="p-8 flex flex-col relative isolate">
-      <div className="w-full h-screen flex gap-12">
+    <main className="p-8 flex h-full flex-col relative isolate">
+      <div className="w-full h-full flex flex-col gap-12">
         {data ? (
           <BubbleChart data={data} />
         ) : (
           <div className="text-slate-400">Loading...</div>
         )}
+        <div className="flex-shrink-0">
+          <LineGraph />
+        </div>
       </div>
     </main>
   );

@@ -3,6 +3,7 @@ import { Manrope } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Sidebar from "../components/Sidebar";
+import { LineGraph } from "@/components/LineGraph";
 
 const manrope = Manrope({ subsets: ["latin"] });
 
@@ -22,7 +23,10 @@ export default function RootLayout({
         <main className="px-8 py-4 h-full w-screen flex flex-col gap-4 overflow-hidden">
           <Header />
           <div className="h-full  flex w-full ">
-            <div className="w-full flex-grow">{children} </div>
+            <div className="w-full flex-grow">
+              {children}
+             
+            </div>
             <Sidebar />
           </div>
         </main>
