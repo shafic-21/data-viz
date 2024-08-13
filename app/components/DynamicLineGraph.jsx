@@ -10,7 +10,10 @@ import {
 } from "d3";
 import { scaleLinear, line, max } from "d3";
 
-import { datasets } from "@/constants";
+import {
+  datasets,
+  AgrciultureProductionIndexNumber20142016100Int$,
+} from "@/constants";
 
 const DynamicLineGraph = () => {
   const title = "agricultural Trend"; //title
@@ -18,7 +21,12 @@ const DynamicLineGraph = () => {
   const xlabel = "Years";
   const svgRef = useRef(null);
 
-  const [data, setData] = useState(datasets[1].value); //for changing the dataset passed
+  const [data, setData] = useState(
+    AgrciultureProductionIndexNumber20142016100Int$
+  ); //for changing the dataset passed
+
+  const first = Object.values(data[0]).slice(1,42)
+  
   const [selection, setSelection] = useState(null);
 
   const dimensions = {
@@ -28,7 +36,7 @@ const DynamicLineGraph = () => {
     marginLeft: 50,
   };
 
-  const maxValue = max(data, (d) => d.number); //dynamic height
+  const maxValue = max(first); //dynamic height
 
   let y = scaleLinear()//vertical scale
     .domain([0, maxValue * 1.1])
@@ -39,7 +47,7 @@ const DynamicLineGraph = () => {
     .range([0, dimensions.charWidth]);
 
   const yAxis = axisLeft(y).tickFormat((d) => `${d}K`); //template string for potential units
-  const xAxis = axisBottom(x).ticks(10);
+  const xAxis = axisBottom(x).ticks(42);
 
   useEffect(() => {
     if (!selection) {
@@ -65,7 +73,7 @@ const DynamicLineGraph = () => {
         .enter()
         .append("circle")
         .attr("cx", (_, i) => (i * dimensions.charWidth) / (data.length - 1))
-        .attr("cy", (d, i) => y(d.number))
+        .attr("cy", (_,i) => y(first[i]))
         .attr("r", 4)
         .attr("transform", `translate(${dimensions.marginLeft})`)
         .attr("fill", "transparent")
@@ -76,14 +84,14 @@ const DynamicLineGraph = () => {
 
       const Myline = line(
         //plot
-        (d) => x(d.name),
-        (d) => y(d.number)
+        (d) => x(d.Country),
+        (d) => y(d.Column2)
       ).curve(curveCatmullRom.alpha(0.5)); //changes rounding of the curve
 
       const defaultline = line(
         //line before transition
-        (d) => x(d.name),
-        (d) => y(d.number * 0)
+        (d) => x(d.Country),
+        (d) => y(d.Column2 * 0)
       );
 
       selection //line
@@ -110,22 +118,22 @@ const DynamicLineGraph = () => {
     <div className="text-slate-400">
       {/* chart title */}
       <h1 className="uppercase text-center mb-10 font-bold text-2xl">
-        {title}
+        {data[0].Country}
       </h1>
       <div className="">
-        <div className="relative flex items-center">
+        <div className="relative flex">
           <svg
             ref={svgRef}
             width={dimensions.charWidth + 100}
             height={dimensions.charHeight + 20}
             className="ps-6"
           ></svg>
-          <div className="absolute -rotate-90">{ylabel}</div>
+          <div className="absolute -rotate-90 pe-6 text-sm">{ylabel}</div>
         </div>
-        <h2 className="text-center ps-6">{xlabel}</h2>{" "}
+        <h2 className="text-end me-6 ps-6 text-sm">{xlabel}</h2>{" "}
       </div>
       <div className="flex flex-wrap gap-8 justify-center mt-10 w-40 mx-auto">
-        {datasets.map(({ label, value }) => (
+        {/* {datasets.map(({ label, value }) => (
           <button
             onClick={() => {
               setData(value);
@@ -136,7 +144,7 @@ const DynamicLineGraph = () => {
           >
             {label}
           </button>
-        ))}
+        ))} */}
       </div>
     </div>
   );
