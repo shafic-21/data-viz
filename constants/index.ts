@@ -1,55 +1,63 @@
 export const countryList = [
-  "Angola",
-  "Burundi",
-  "Benin",
-  "Burkina Faso",
-  "Botswana",
-  "Central African Republic",
-  "Côte d'Ivoire",
-  "Cameroon",
-  "Congo, Dem. Rep. of",
-  "Congo, Republic of",
-  "Comoros",
-  "Cape Verde",
-  "Djibouti",
-  "Algeria",
-  "Egypt",
-  "Ethiopia",
-  "Gabon",
-  "Ghana",
-  "Guinea",
-  "Gambia, The",
-  "Guinea-Bissau",
-  "Kenya",
-  "Liberia",
-  "Libya",
-  "Lesotho",
-  "Morocco",
-  "Madagascar",
-  "Malawi",
-  "Mali",
-  "Mauritania",
-  "Mauritius",
-  "Mozambique",
-  "Namibia",
-  "Niger",
-  "Nigeria",
-  "Rwanda",
-  "São Tomé and Príncipe",
-  "Senegal",
-  "Seychelles",
-  "Sierra Leone",
-  "Somalia",
-  "South Africa",
-  "South Sudan",
-  "Sudan",
-  "Swaziland",
-  "Tanzania",
-  "Togo",
-  "Tunisia",
-  "Uganda",
-  "Zambia",
-  "Zimbabwe",
+  { name: "Angola", image: "/images/angola.webp", code: "ao" },
+  { name: "Benin", image: "/images/benin.png", code: "bj" },
+  { name: "Burkina Faso", image: "/images/burkina-faso.webp", code: "bf" },
+  { name: "Botswana", image: "/images/botswana.png", code: "bw" },
+  { name: "Burundi", image: "/images/burundi.png", code: "bi" },
+  { name: "Cape Verde", image: "/images/cape-verde.webp", code: "cv" },
+  { name: "Cameroon", image: "/images/cameroon.png", code: "cm" },
+  {
+    name: "Central African Republic",
+    image: "/images/central-african-republic.png",
+    code: "cf",
+  },
+  { name: "Chad", image: "", code: "td" },
+  { name: "Comoros", image: "/images/comoros.webp", code: "km" },
+  { name: "Côte d'Ivoire", image: "/images/cote-d-ivoire.webp", code: "ci" },
+  { name: "Djibouti", image: "/images/djibouti.webp", code: "dj" },
+  { name: "Algeria", image: "/images/algeria.webp", code: "dz" },
+  { name: "Egypt", image: "/images/egypt.png", code: "eg" },
+  { name: "Ethiopia", image: "/images/ethiopia.png", code: "et" },
+  { name: "Gabon", image: "/images/gabon.webp", code: "ga" },
+  { name: "Ghana", image: "/images/ghana.webp", code: "gh" },
+  { name: "Guinea", image: "/images/guinea.png", code: "gn" },
+  { name: "Gambia, The", image: "/images/gambia.webp", code: "gm" },
+  { name: "Gambia", image: "/images/gambia.webp", code: "gm" }, // Duplicate entry
+  { name: "Guinea-Bissau", image: "/images/guinea-bissau.png", code: "gw" },
+  { name: "Equatorial Guinea", image: "", code: "gq" },
+  { name: "Kenya", image: "/images/kenya.webp", code: "ke" },
+  { name: "Liberia", image: "/images/liberia.png", code: "lr" },
+  { name: "Lesotho", image: "/images/lesotho.webp", code: "ls" },
+  { name: "Morocco", image: "/images/morocco.png", code: "ma" },
+  { name: "Madagascar", image: "/images/madagascar.png", code: "mg" },
+  { name: "Mali", image: "/images/mali.webp", code: "ml" },
+  { name: "Mozambique", image: "/images/mozambique.png", code: "mz" },
+  { name: "Mauritania", image: "/images/mauritania.webp", code: "mr" },
+  { name: "Mauritius", image: "/images/mauritius.png", code: "mu" },
+  { name: "Malawi", image: "/images/malawi.png", code: "mw" },
+  { name: "Namibia", image: "/images/namibia.png", code: "na" },
+  { name: "Niger", image: "/images/niger.png", code: "ne" },
+  { name: "Nigeria", image: "/images/nigeria.png", code: "ng" },
+  { name: "Rwanda", image: "/images/rwanda.jpg", code: "rw" },
+  { name: "Sudan", image: "/images/sudan.png", code: "sd" },
+  { name: "Senegal", image: "/images/senegal.webp", code: "sn" },
+  { name: "Sierra Leone", image: "/images/sierra-leone.png", code: "sl" },
+  { name: "South-Sudan", image: "/images/south-sudan.webp", code: "ss" },
+  {
+    name: "São Tomé and Príncipe",
+    image: "/images/sao-tome-and-principe.webp",
+    code: "st",
+  },
+  { name: "Eswatini", image: "/images/eswatini.webp", code: "sz" },
+  { name: "Togo", image: "/images/togo.webp", code: "tg" },
+  { name: "Tunisia", image: "/images/tunisia.png", code: "tn" },
+  { name: "Tanzania", image: "/images/tanzania.png", code: "tz" },
+  { name: "Uganda", image: "/images/uganda.webp", code: "ug" },
+  { name: "South Africa", image: "/images/south-africa.png", code: "za" },
+  { name: "Zambia", image: "/images/zambia.png", code: "zm" },
+  { name: "Zimbabwe", image: "/images/zimbabwe.png", code: "zw" },
+  { name: "Congo, Dem. Rep. of", image: "/images/drc.jpg", code: "cd" },
+  { name: "Congo, Republic of", image: "/images/congo.png", code: "cg" },
 ];
 
 export const regionColors = {
@@ -82,6 +90,7 @@ export const regionList = [
       { name: "Ghana", image: "/images/ghana.webp", code: "gh" },
       { name: "Guinea", image: "/images/guinea.png", code: "gn" },
       { name: "Gambia, The", image: "/images/gambia.webp", code: "gm" },
+      { name: "Gambia", image: "/images/gambia.webp", code: "gm" },
       { name: "Guinea-Bissau", image: "/images/guinea-bissau.png", code: "gw" },
       { name: "Liberia", image: "/images/liberia.png", code: "lr" },
       { name: "Mali", image: "/images/mali.webp", code: "ml" },
@@ -433,168 +442,173 @@ export const datasets: { label: string; value: any }[] = [
 ];
 
 //resakss data excel spreadsheets
-export const resakssData: { name: string; path: string }[] = [
-  {
-    name: "Yield, milk (whole fresh cow, kilograms per head)",
-    path: "/data/resakss/agricultural-transformation-and-growth/yield-milk-(whole-fresh-cow-kilograms-per-head).xlsx",
-  },
-  {
-    name: "Yield, cassava (Tons per hectare)",
-    path: "/data/resakss/agricultural-transformation-and-growth/yield-cassava-(tons-per-hectare).xlsx",
-  },
-  {
-    name: "Intra-African agricultural trade, imports (constant 2015 USD, billion)",
-    path: "/data/resakss/agricultural-transformation-and-growth/intra-african-agricultural-trade-imports-(constant-2015-USD-billion).xlsx",
-  },
-  {
-    name: "Intra-African agricultural trade, exports (constant 2015 US$, billion)",
-    path: "/data/resakss/agricultural-transformation-and-growth/intra-african-agricultural-trade-exports-(constant-2015-US$-billion).xlsx",
-  },
-  {
-    name: "Domestic food price volatility (index)",
-    path: "/data/resakss/agricultural-transformation-and-growth/domestic-food-price-volatility-(index).xlsx",
-  },
-  {
-    name: "Agriculture value added per worker (constant 2015 USD)",
-    path: "/data/resakss/agricultural-transformation-and-growth/agriculture-value-added-per-worker-(constant-2015-USD).xlsx",
-  },
-  {
-    name: "Agriculture value added per hectare of agricultural land (constant 2015 USD)",
-    path: "/data/resakss/agricultural-transformation-and-growth/agriculture-value-added-per-hectare-of-agricultural-land-(constant-2015-USD).xlsx",
-  },
-  {
-    name: "Agrciulture Production Index Number (2014-2016 = 100) (Int. $)",
-    path: "/data/resakss/agricultural-transformation-and-growth/agriculture-production-index-number-(2014-2016=100)-(Int.$).xlsx",
-  },
-  {
-    name: "Yield, yams (Tons per hectare)",
-    path: "/data/resakss/agricultural-transformation-and-growth/yield-yams-(tons-per-hectare).xlsx",
-  },
-  {
-    name: "Yield, meat (cattle, kilograms per head)",
-    path: "/data/resakss/agricultural-transformation-and-growth/yield-meat-(cattle-kilograms-per-head).xlsx",
-  },
-  {
-    name: "Yield, maize (Tons per hectare)",
-    path: "/data/resakss/agricultural-transformation-and-growth/yield-maize-(tons-per-hectare).xlsx",
-  },
-  // here
-  {
-    name: "Cereal import dependency ratio (%)",
-    path: "/data/resakss/economic-growth-and-inclusive-development/cereal-import-dependency-ratio-(%).xlsx",
-  },
-  {
-    name: "Prevalence of wasting (% of children under 5)",
-    path: "/data/resakss/economic-growth-and-inclusive-development/prevalence-of-wasting-(%-of-children-under-5).xlsx",
-  },
-  {
-    name: "Prevalence of underweight, weight for age (% of children under 5)",
-    path: "/data/resakss/economic-growth-and-inclusive-development/prevalence-of-underweight-weight-for-age-(%-of-children-under-5).xlsx",
-  },
-  {
-    name: "Prevalence of stunting, height for age (% of children under 5)",
-    path: "/data/resakss/economic-growth-and-inclusive-development/prevalence-of-stunting-height-for-age-(%-of-children-under-5).xlsx",
-  },
-  {
-    name: "Prevalance of undernourishment (% of population)",
-    path: "/data/resakss/economic-growth-and-inclusive-development/prevalance-of-undernourishment-(%-of-population).xlsx",
-  },
-  {
-    name: "Poverty gap at $2.15 a day (2017 PPP) (%)",
-    path: "/data/resakss/economic-growth-and-inclusive-development/poverty-gap-at-$2point15-a-day-(2017-PPP)-(%).xlsx",
-  },
-  {
-    name: "Poverty Headcount Ratio at $2.15 a day (2017 PPP) (%)",
-    path: "/data/resakss/economic-growth-and-inclusive-development/poverty-headcount-ratio-at-$2point15-a-day-(2017-PPP)-(%).xlsx",
-  },
-  {
-    name: "Household consumption expenditure per capita (constant 2015 USD)",
-    path: "/data/resakss/economic-growth-and-inclusive-development/household-consumption-expenditure-per-capita-(constant-2015-USD).xlsx",
-  },
-  {
-    name: "GINI index",
-    path: "/data/resakss/economic-growth-and-inclusive-development/GINI-index.xlsx",
-  },
-  {
-    name: "GDP per capita (constant 2015 USD)",
-    path: "/data/resakss/economic-growth-and-inclusive-development/GDP-per-capita-(constant-2015-USD).xlsx",
-  },
-  {
-    name: "Employment rate (% of population, 15+ years)",
-    path: "/data/resakss/economic-growth-and-inclusive-development/employment-rate-(%-of-population-15+-years).xlsx",
-  },
-  {
-    name: "Employment rate (% of labor force, 15-64 years)",
-    path: "/data/resakss/economic-growth-and-inclusive-development/employment-rate-(%-of-labor-force-15-64-years).xlsx",
-  },
-  //here
-  {
-    name: "Agricultural value added (% GDP)",
-    path: "/data/resakss/other/agricultural-value-added-(%-GDP).xlsx",
-  },
-  {
-    name: "Total fertilizer consumption (kilogram per hectare)",
-    path: "/data/resakss/other/total-fertilizer-consumption-(kilogram-per-hectare).xlsx",
-  },
-  {
-    name: "Ratio of agricultural exports to agricultural imports",
-    path: "/data/resakss/other/ratio-of-agricultural-exports-to-agricultural-imports.xlsx",
-  },
-  {
-    name: "Gross Domestic Product (constant 2015 US$, billion)",
-    path: "/data/resakss/other/gross-domestic-product-(constant-2015-US$-billion).xlsx",
-  },
-  {
-    name: "Global Hunger Index",
-    path: "/data/resakss/other/global-hunger-index.xlsx",
-  },
-  {
-    name: "General government gross revenue (% of GDP)",
-    path: "/data/resakss/other/general-government-gross-revenue-(%-of-GDP).xlsx",
-  },
-  {
-    name: "General government gross debt (% of GDP)",
-    path: "/data/resakss/other/general-government-gross-debt-(%-of-GDP).xlsx",
-  },
-  {
-    name: "Emergency food aid (% total ODA)",
-    path: "/data/resakss/other/emergency-food-aid-(%-total-ODA).xlsx",
-  },
-  {
-    name: "Annual inflation, GDP deflator (%)",
-    path: "/data/resakss/other/annual-inflation-GDP-deflator-(%).xlsx",
-  },
-  {
-    name: "Agriculture value added gowth rate (%)",
-    path: "/data/resakss/other/agriculture-value-added-growth-rate-(%).xlsx",
-  },
-  {
-    name: "Agricultural imports (% of total merchandise imports)",
-    path: "/data/resakss/other/agricultural-imports-(%-of-total-merchandise-imports).xlsx",
-  },
-  {
-    name: "Agricultural exports (% of total merchandise exports)",
-    path: "/data/resakss/other/agricultural-exports-(%-of-total-merchandise-exports).xlsx",
-  },
-  {
-    name: "Agricultural ODA (% total ODA)",
-    path: "/data/resakss/other/agricultural-ODA-(%-total-ODA).xlsx",
-  },
-  {
-    name: "Agricultural ODA (% of commitements)",
-    path: "/data/resakss/other/agricultural-ODA-(%-of-commitments).xlsx",
-  },
-  {
-    name: "Government agriculture expenditure (constant 2015 US$, billion)",
-    path: "/data/resakss/systemic-capacity-to-deliver-results/government-agriculture-expenditure-(constant-2015-US$-billion).xlsx",
-  },
-  {
-    name: "Government agriculture expenditure (% of total expenditure)",
-    path: "/data/resakss/systemic-capacity-to-deliver-results/government-agriculture-expenditure-(%-of-total-expenditure).xlsx",
-  },
-  {
-    name: "Government agriculture expenditure (% of agriculture value added)",
-    path: "/data/resakss/systemic-capacity-to-deliver-results/government-agriculture-expenditure-(%-of-agriculture-value-added).xlsx",
-  },
-];
-
+export const resakssData = {
+  "Economic growth and inclusive development": [
+    {
+      name: "Cereal import dependency ratio (%)",
+      path: "/data/resakss/economic-growth-and-inclusive-development/cereal-import-dependency-ratio-(%).xlsx",
+    },
+    {
+      name: "Employment rate (% of labor force, 15-64 years)",
+      path: "/data/resakss/economic-growth-and-inclusive-development/employment-rate-(%-of-labor-force-15-64-years).xlsx",
+    },
+    {
+      name: "Employment rate (% of population, 15+ years)",
+      path: "/data/resakss/economic-growth-and-inclusive-development/employment-rate-(%-of-population-15+-years).xlsx",
+    },
+    {
+      name: "GDP per capita (constant 2015 USD)",
+      path: "/data/resakss/economic-growth-and-inclusive-development/GDP-per-capita-(constant-2015-USD).xlsx",
+    },
+    {
+      name: "GINI index",
+      path: "/data/resakss/economic-growth-and-inclusive-development/GINI-index.xlsx",
+    },
+    {
+      name: "Household consumption expenditure per capita (constant 2015 USD)",
+      path: "/data/resakss/economic-growth-and-inclusive-development/household-consumption-expenditure-per-capita-(constant-2015-USD).xlsx",
+    },
+    {
+      name: "Poverty Headcount Ratio at $2.15 a day (2017 PPP) (%)",
+      path: "/data/resakss/economic-growth-and-inclusive-development/poverty-headcount-ratio-at-$2point15-a-day-(2017-PPP)-(%).xlsx",
+    },
+    {
+      name: "Poverty gap at $2.15 a day (2017 PPP) (%)",
+      path: "/data/resakss/economic-growth-and-inclusive-development/poverty-gap-at-$2point15-a-day-(2017-PPP)-(%).xlsx",
+    },
+    {
+      name: "Prevalance of undernourishment (% of population)",
+      path: "/data/resakss/economic-growth-and-inclusive-development/prevalance-of-undernourishment-(%-of-population).xlsx",
+    },
+    {
+      name: "Prevalence of stunting, height for age (% of children under 5)",
+      path: "/data/resakss/economic-growth-and-inclusive-development/prevalence-of-stunting-height-for-age-(%-of-children-under-5).xlsx",
+    },
+    {
+      name: "Prevalence of underweight, weight for age (% of children under 5)",
+      path: "/data/resakss/economic-growth-and-inclusive-development/prevalence-of-underweight-weight-for-age-(%-of-children-under-5).xlsx",//doesnot work
+    },
+    {
+      name: "Prevalence of wasting (% of children under 5)",
+      path: "/data/resakss/economic-growth-and-inclusive-development/prevalence-of-wasting-(%-of-children-under-5).xlsx",
+    },
+  ],
+  "Agricultural transformation and growth": [
+    {
+      name: "Yield, maize (Tons per hectare)",
+      path: "/data/resakss/agricultural-transformation-and-growth/yield-maize-(tons-per-hectare).xlsx",
+    },
+    {
+      name: "Yield, meat (cattle, kilograms per head)",
+      path: "/data/resakss/agricultural-transformation-and-growth/yield-meat-(cattle-kilograms-per-head).xlsx",
+    },
+    {
+      name: "Yield, yams (Tons per hectare)",
+      path: "/data/resakss/agricultural-transformation-and-growth/yield-yams-(tons-per-hectare).xlsx",
+    },
+    {
+      name: "Agrciulture Production Index Number (2014-2016 = 100) (Int. $)",
+      path: "/data/resakss/agricultural-transformation-and-growth/agriculture-production-index-number-(2014-2016=100)-(Int.$).xlsx",
+    },
+    {
+      name: "Agriculture value added per hectare of agricultural land (constant 2015 USD)",
+      path: "/data/resakss/agricultural-transformation-and-growth/agriculture-value-added-per-hectare-of-agricultural-land-(constant-2015-USD).xlsx",
+    },
+    {
+      name: "Agriculture value added per worker (constant 2015 USD)",
+      path: "/data/resakss/agricultural-transformation-and-growth/agriculture-value-added-per-worker-(constant-2015-USD).xlsx",
+    },
+    {
+      name: "Domestic food price volatility (index)",
+      path: "/data/resakss/agricultural-transformation-and-growth/domestic-food-price-volatility-(index).xlsx",
+    },
+    {
+      name: "Intra-African agricultural trade, exports (constant 2015 US$, billion)",
+      path: "/data/resakss/agricultural-transformation-and-growth/intra-african-agricultural-trade-exports-(constant-2015-US$-billion).xlsx",
+    },
+    {
+      name: "Intra-African agricultural trade, imports (constant 2015 USD, billion)",
+      path: "/data/resakss/agricultural-transformation-and-growth/intra-african-agricultural-trade-imports-(constant-2015-USD-billion).xlsx",
+    },
+    {
+      name: "Yield, cassava (Tons per hectare)",
+      path: "/data/resakss/agricultural-transformation-and-growth/yield-cassava-(tons-per-hectare).xlsx",
+    },
+    {
+      name: "Yield, milk (whole fresh cow, kilograms per head)",
+      path: "/data/resakss/agricultural-transformation-and-growth/yield-milk-(whole-fresh-cow-kilograms-per-head).xlsx",
+    },
+  ],
+  "Systemic capacity to deliver results": [
+    {
+      name: "Government agriculture expenditure (% of agriculture value added)",
+      path: "/data/resakss/systemic-capacity-to-deliver-results/government-agriculture-expenditure-(%-of-agriculture-value-added).xlsx",
+    },
+    {
+      name: "Government agriculture expenditure (% of total expenditure)",
+      path: "/data/resakss/systemic-capacity-to-deliver-results/government-agriculture-expenditure-(%-of-total-expenditure).xlsx",
+    },
+    {
+      name: "Government agriculture expenditure (constant 2015 US$, billion)",
+      path: "/data/resakss/systemic-capacity-to-deliver-results/government-agriculture-expenditure-(constant-2015-US$-billion).xlsx",
+    },
+  ],
+  Other: [
+    {
+      name: "Agricultural ODA (% of commitements)",
+      path: "/data/resakss/other/agricultural-ODA-(%-of-commitments).xlsx",
+    },
+    {
+      name: "Agricultural ODA (% total ODA)",
+      path: "/data/resakss/other/agricultural-ODA-(%-total-ODA).xlsx",
+    },
+    {
+      name: "Agricultural exports (% of total merchandise exports)",
+      path: "/data/resakss/other/agricultural-exports-(%-of-total-merchandise-exports).xlsx",
+    },
+    {
+      name: "Agricultural imports (% of total merchandise imports)",
+      path: "/data/resakss/other/agricultural-imports-(%-of-total-merchandise-imports).xlsx",
+    },
+    {
+      name: "Agricultural value added (% GDP)",
+      path: "/data/resakss/other/agricultural-value-added-(%-GDP).xlsx",
+    },
+    {
+      name: "Agriculture value added gowth rate (%)",
+      path: "/data/resakss/other/agriculture-value-added-growth-rate-(%).xlsx",
+    },
+    {
+      name: "Annual inflation, GDP deflator (%)",
+      path: "/data/resakss/other/annual-inflation-GDP-deflator-(%).xlsx",
+    },
+    {
+      name: "Emergency food aid (% total ODA)",
+      path: "/data/resakss/other/emergency-food-aid-(%-total-ODA).xlsx",
+    },
+    {
+      name: "General government gross debt (% of GDP)",
+      path: "/data/resakss/other/general-government-gross-debt-(%-of-GDP).xlsx",
+    },
+    {
+      name: "General government gross revenue (% of GDP)",
+      path: "/data/resakss/other/general-government-gross-revenue-(%-of-GDP).xlsx",
+    },
+    {
+      name: "Global Hunger Index",
+      path: "/data/resakss/other/global-hunger-index.xlsx",
+    },
+    {
+      name: "Gross Domestic Product (constant 2015 US$, billion)",
+      path: "/data/resakss/other/gross-domestic-product-(constant-2015-US$-billion).xlsx",
+    },
+    {
+      name: "Ratio of agricultural exports to agricultural imports",
+      path: "/data/resakss/other/ratio-of-agricultural-exports-to-agricultural-imports.xlsx",
+    },
+    {
+      name: "Total fertilizer consumption (kilogram per hectare)",
+      path: "/data/resakss/other/total-fertilizer-consumption-(kilogram-per-hectare).xlsx",
+    },
+  ],
+};

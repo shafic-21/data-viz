@@ -1,15 +1,23 @@
 "use client";
 
-import { generateDataNodesandLinks, getExcelData,childrenFormat } from "@/utils";
+import {
+  generateDataNodesandLinks,
+  getExcelData,
+  childrenFormat,
+} from "@/utils";
 import { useCallback, useEffect, useState } from "react";
 
-import BubbleChart from "./components/BubbleChart";
-import Sidebar from "./components/Sidebar";
+import BubbleChart from "../components/BubbleChart";
+
+import { useFileStore } from "@/store";
 
 export default function Home() {
   const [data, setData] = useState(null);
   const [fieldName, setFieldName] = useState(null);
-  const [filePath, setFilePath] = useState("/data/2024.xlsx");
+
+  const { filePath } = useFileStore();
+
+  console.log(filePath);
 
   const fetchData = useCallback(async () => {
     const result = await generateDataNodesandLinks(filePath).then((res) => {
@@ -18,7 +26,7 @@ export default function Home() {
       setFieldName(fieldName);
       // console.log(data);
     });
-  }, [data, fieldName,filePath]);
+  }, [data, fieldName, filePath]);
 
   useEffect(() => {
     fetchData();
@@ -26,14 +34,13 @@ export default function Home() {
 
   return (
     <main className="p-8 flex flex-col relative isolate">
-     
-      {/* <div className="w-full h-screen flex gap-12 bg-red-300">
+      <div className="w-full h-screen flex gap-12">
         {data ? (
           <BubbleChart data={data} />
         ) : (
           <div className="text-slate-400">Loading...</div>
         )}
-        <Sidebar/>      </div> */}
+      </div>
     </main>
   );
 }

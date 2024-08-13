@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
-import Header from "@/app/components/Header"
+import Header from "@/components/Header";
+import Sidebar from "../components/Sidebar";
 
 const manrope = Manrope({ subsets: ["latin"] });
 
@@ -18,9 +19,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${manrope.className} bg-slate-950 h-screen`}>
-        <Header/>
-        {children}
-        </body>
+        <main className="px-8 py-4 h-full w-screen flex gap-4 overflow-hidden">
+          <div className="h-full flex-grow w-full ">
+            <Header />
+            {children}
+          </div>
+          <Sidebar />
+        </main>
+      </body>
     </html>
   );
 }
