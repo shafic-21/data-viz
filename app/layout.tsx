@@ -19,12 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${manrope.className} bg-slate-950 h-screen`}>
-        <main className="px-8 py-4 h-full w-screen flex gap-4 overflow-hidden">
-          <div className="h-full flex-grow w-full ">
-            <Header />
-            {children}
+        <main className="px-8 py-4 h-full w-screen flex flex-col gap-4 overflow-hidden">
+          <Header />
+          <div className="h-full  flex w-full ">
+            <div className="w-full flex-grow">{children} </div>
+            <Sidebar />
           </div>
-          <Sidebar />
         </main>
       </body>
     </html>

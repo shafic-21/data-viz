@@ -9,24 +9,24 @@ import { useCallback, useEffect, useState } from "react";
 
 import BubbleChart from "../components/BubbleChart";
 
-import { useFileStore } from "@/store";
+import { useFileStore, useYearListStore } from "@/store";
 
 export default function Home() {
   const [data, setData] = useState(null);
-  const [fieldName, setFieldName] = useState(null);
+
 
   const { filePath } = useFileStore();
+  const {updateYearList} = useYearListStore((state)=>state)
 
   console.log(filePath);
 
   const fetchData = useCallback(async () => {
     const result = await generateDataNodesandLinks(filePath).then((res) => {
-      const { data, fieldName } = res;
+      const { data, years } = res;
       setData(data);
-      setFieldName(fieldName);
-      // console.log(data);
+      updateYearList(years);
     });
-  }, [data, fieldName, filePath]);
+  }, [data, filePath]);
 
   useEffect(() => {
     fetchData();

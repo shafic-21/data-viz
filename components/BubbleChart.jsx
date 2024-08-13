@@ -1,20 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import { regionColors } from "@/constants";
-
+import { useYearListStore } from "@/store";
 
 const BubbleChart = ({ data }) => {
   const svgRef = useRef(null);
   const containerRef = useRef(null);
-  const [tooltipData, setTooltipData] = useState(null);
-  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const { activeYear } = useYearListStore();
 
   const regionColorScale = d3
     .scaleOrdinal()
     .domain(Object.keys(regionColors))
     .range(Object.values(regionColors));
-  // const [width, setWidth] = useState(null);
-  // const [height, setHeight] = useState(null);
 
   useEffect(() => {
     if (!data || !svgRef.current || !containerRef.current) return;
@@ -22,22 +19,41 @@ const BubbleChart = ({ data }) => {
     const container = d3.select(containerRef.current);
     const width = containerRef.current.clientWidth;
     const height = containerRef.current.clientHeight;
-    const flagSize = 20;
+
+    const regionValues = data.nodes
+      .filter((d) => d.type === "region")
+      .map((d) => d.value);
+
+    const regionSizeScale = d3
+      .scaleLinear()
+      .domain([d3.min(regionValues), d3.max(regionValues)])
+      .range([50, 100]);
+
+    const countryValues = data.nodes
+      .filter((d) => d.type === "country" && d.value !== -1)
+      .map((d) => d.value);
+
+    const countrySizeScale = d3
+      .scaleLinear()
+      .domain([d3.min(countryValues), d3.max(countryValues)])
+      .range([10, 40]);
 
     const links = data.links
       .filter((d) => d.type !== "data-link")
       .map((d) => ({ ...d }));
+
     const nodes = data.nodes
-      .filter((d) => d.type !== "data-point")
+      .filter((d) => Number(d.year) === activeYear)
       .map((d) => ({ ...d }));
+
     const simulation = d3
       .forceSimulation(nodes)
-      .force("charge", d3.forceManyBody().strength(-80))
+      .force("charge", d3.forceManyBody().strength(-100))
       .force(
         "link",
         d3
           .forceLink(links)
-          .id((d) => d.id)
+          .id((d) => d.name)
           .distance(0)
       )
       .force("center", d3.forceCenter(width / 2, height / 2))
@@ -45,7 +61,11 @@ const BubbleChart = ({ data }) => {
         "collision",
         d3
           .forceCollide()
-          .radius((d) => (d.type == "region" ? 50 :d.type == "country"? 30:10))
+          .radius((d) =>
+            d.type === "region"
+              ? regionSizeScale(d.value) + 2
+              : (d.value === -1 ? 10 : countrySizeScale(d.value)) + 2
+          )
           .iterations(3)
       )
       .force("x", d3.forceX())
@@ -71,33 +91,43 @@ const BubbleChart = ({ data }) => {
 
     const node = svg.append("g").selectAll("g").data(nodes).join("g");
 
-    svg
-      .append("defs")
-      .append("clipPath")
-      .attr("id", "flag-clip")
-      .append("circle")
-      .attr("r", flagSize);
-
     node
       .append("circle")
-      .attr("r", ({ type }) => (type == "region" ? 50 : type=="country"?flagSize:5))
-      .attr(
-        "fill",
-        (d) => (d.type == "region" ? regionColorScale(d.name) : "lightblue") // Changed to white for better flag visibility
-      );
+      .attr("r", (d) =>
+        d.type === "region"
+          ? regionSizeScale(d.value)
+          : d.value === -1
+          ? 10
+          : countrySizeScale(d.value)
+      )
+      .attr("fill", (d) =>
+        d.type === "region" ? regionColorScale(d.name) : "lightblue"
+      )
+      .attr("opacity", (d) => (d.value === -1 ? 0.2 : 1));
 
     node
       .filter((d) => d.type === "country")
-      .append("image")
-      .attr(
-        "xlink:href",
-        (d) => `https://hatscripts.github.io/circle-flags/flags/${d.code}.svg`
-      )
-      .attr("width", flagSize * 2) // Double the flag size
-      .attr("height", flagSize * 2) // Double the flag size
-      .attr("x", -flagSize) // Center the image
-      .attr("y", -flagSize) // Center the image
-      .attr("clip-path", "url(#flag-clip)");
+      .each(function (d) {
+        const flagSize = d.value === -1 ? 10 : countrySizeScale(d.value);
+        d3.select(this)
+          .append("clipPath")
+          .attr("id", `clip-${d.code}`)
+          .append("circle")
+          .attr("r", flagSize);
+
+        d3.select(this)
+          .append("image")
+          .attr(
+            "xlink:href",
+            `https://hatscripts.github.io/circle-flags/flags/${d.code}.svg`
+          )
+          .attr("width", flagSize * 2)
+          .attr("height", flagSize * 2)
+          .attr("x", -flagSize)
+          .attr("y", -flagSize)
+          .attr("clip-path", `url(#clip-${d.code})`)
+          .attr("opacity", d.value === -1 ? 0.2 : 1);
+      });
 
     node.call(
       d3
@@ -106,15 +136,6 @@ const BubbleChart = ({ data }) => {
         .on("drag", dragged)
         .on("end", dragended)
     );
-
-    node
-      .on("mouseover", (event, d) => {
-        setTooltipData(d);
-        setTooltipPosition({ x: event.pageX, y: event.pageY });
-      })
-      .on("mouseout", () => {
-        setTooltipData(null);
-      });
 
     simulation.on("tick", () => {
       link
@@ -126,21 +147,17 @@ const BubbleChart = ({ data }) => {
       node.attr("transform", (d) => `translate(${d.x},${d.y})`);
     });
 
-    // Reheat the simulation when drag starts, and fix the subject position.
     function dragstarted(event) {
       if (!event.active) simulation.alphaTarget(0.3).restart();
       event.subject.fx = event.subject.x;
       event.subject.fy = event.subject.y;
     }
 
-    // Update the subject (dragged node) position during drag.
     function dragged(event) {
       event.subject.fx = event.x;
       event.subject.fy = event.y;
     }
 
-    // Restore the target alpha so the simulation cools after dragging ends.
-    // Unfix the subject position now that it’s no longer being dragged.
     function dragended(event) {
       if (!event.active) simulation.alphaTarget(0);
       event.subject.fx = null;
@@ -150,32 +167,11 @@ const BubbleChart = ({ data }) => {
     return () => {
       simulation.stop();
     };
-  }, [data]);
+  }, [data, activeYear]);
 
   return (
     <div ref={containerRef} className="h-full w-full">
       <svg ref={svgRef} />
-      {/* {tooltipData && (
-      
-         
-              <div
-                style={{
-                  position: "absolute",
-                  left: tooltipPosition.x,
-                  top: tooltipPosition.y,
-                  backgroundColor:"#FFF",
-                  width: 1,
-                  height: 1,
-                }}
-              >
-                <p>
-                  <strong>{tooltipData.name}</strong>
-                </p>
-                <p>Region: {tooltipData.region}</p>
-                <p>Value: {tooltipData.value}</p>
-              </div>
-    
-        )} */}
     </div>
   );
 };
