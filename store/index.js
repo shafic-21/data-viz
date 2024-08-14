@@ -19,3 +19,8 @@ export const useYearListStore = create((set) => ({
     }),
   setActiveYear: (year) => set({ activeYear: year }),
 }));
+
+export const useChartDataStore = create((set) => ({
+  activeData: "Africa wide",
+  updateActiveData: (activeData) => set((state) => ({ activeData })),
+}));

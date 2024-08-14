@@ -1,12 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import { regionColors } from "@/constants";
-import { useYearListStore } from "@/store";
+import { useChartDataStore, useYearListStore } from "@/store";
 
 const BubbleChart = ({ data }) => {
   const svgRef = useRef(null);
   const containerRef = useRef(null);
   const { activeYear } = useYearListStore();
+
+  const { updateActiveData } = useChartDataStore((state) => state);
 
   const regionColorScale = d3
     .scaleOrdinal()
@@ -38,12 +40,10 @@ const BubbleChart = ({ data }) => {
       .domain([d3.min(countryValues), d3.max(countryValues)])
       .range([10, 40]);
 
-    const links = data.links
-      .filter((d) => d.type !== "data-link")
-      .map((d) => ({ ...d }));
+    const links = data.links.map((d) => ({ ...d }));
 
     const nodes = data.nodes
-      .filter((d) => Number(d.year) === activeYear)
+      .filter((d) => Number(d.year) === activeYear && d.name != "Africa wide")
       .map((d) => ({ ...d }));
 
     const simulation = d3
@@ -137,6 +137,10 @@ const BubbleChart = ({ data }) => {
         .on("end", dragended)
     );
 
+    node.on("click", (event, d) => {
+      updateActiveData(d.name);
+    });
+
     simulation.on("tick", () => {
       link
         .attr("x1", (d) => d.source.x)
@@ -167,7 +171,7 @@ const BubbleChart = ({ data }) => {
     return () => {
       simulation.stop();
     };
-  }, [data, activeYear]);
+  }, [data, activeYear, updateActiveData]);
 
   return (
     <div ref={containerRef} className="h-full w-full">

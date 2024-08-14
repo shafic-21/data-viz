@@ -3,18 +3,7 @@ import readXlsxFile from "read-excel-file";
 
 export const generateDataNodesandLinks = async (filePath) => {
   const { data: rawData, fieldName } = await getExcelData(filePath);
-  let nodes = [
-    /*
-    {
-      id:string
-      type:"region"|"country"|"data-point"
-      name:""
-      value:""
-      parent:""|null
-    }
-    */
-  ];
-
+  let nodes = [];
   let links = [];
 
   const years = rawData[0].slice(1).map((cell) => Number(cell));
@@ -23,19 +12,10 @@ export const generateDataNodesandLinks = async (filePath) => {
     .filter((cells) => {
       let regionName = cells[0];
       let regions = regionList.map(({ name }) => name);
-      return regions.includes(regionName) && regionName != "Africa wide";
+      return regions.includes(regionName);
     })
     .map((cells, regionIndex) => {
       let regionName = cells[0];
-
-      // nodes.push({
-      //   id: regionName,
-      //   type: "region",
-      //   name: regionName,
-      //   value: null,
-      //   parent: null,
-      //   code: null,
-      // });
 
       let values = cells.slice(1).map((value, i) => {
         let year = years[i];
@@ -74,14 +54,6 @@ export const generateDataNodesandLinks = async (filePath) => {
         })[0]
         .countries.filter((c) => c.name == countryName)[0].code;
 
-      // nodes.push({
-      //   id: countryName,
-      //   type: "country",
-      //   name: countryName,
-      //   code: countryCode,
-      //   value: null,
-      //   parent: countryRegion,
-      // });
       links.push({
         source: countryName,
         target: countryRegion,
@@ -90,13 +62,6 @@ export const generateDataNodesandLinks = async (filePath) => {
 
       let values = cells.slice(1).map((value, i) => {
         let year = years[i];
-
-        // links.push({
-        //   source: year + countryName,
-        //   target: countryName,
-        //   type: "data-link",
-        // });
-
         nodes.push({
           id: year + countryName,
           type: "country",
