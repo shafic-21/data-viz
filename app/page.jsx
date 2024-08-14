@@ -36,7 +36,7 @@ export default function Home() {
         {data ? (
           <>
             {" "}
-            <BubbleChart data={data} />
+            {/* <BubbleChart data={data} /> */}
             <div className="flex-shrink-0">
               <LineGraph nodes={data?.nodes} />
             </div>
