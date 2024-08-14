@@ -78,7 +78,7 @@ export function LineGraph({ nodes }) {
                 <ChartTooltipContent
                   className="w-[150px]"
                   nameKey="value"
-                  labelFormatter={(value,props) => props[0].payload.year}
+                  labelFormatter={(value, props) => props[0].payload.year}
                 />
               }
             />
