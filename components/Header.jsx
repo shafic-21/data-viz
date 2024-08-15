@@ -12,10 +12,6 @@ import {
 import { resakssData } from "@/constants";
 import { useYearListStore } from "@/store";
 import { useFileStore } from "@/store";
-import { useEffect, useState } from "react";
-
-const defaultValue =
-  "/data/resakss/agricultural-transformation-and-growth/agriculture-value-added-per-worker-(constant-2015-USD).xlsx";
 
 const Header = () => {
   return (
@@ -42,7 +38,9 @@ const FieldSelectTab = () => {
 
   return (
     <Select
-      defaultValue={defaultValue}
+      defaultValue={
+        "/data/resakss/economic-growth-and-inclusive-development/household-consumption-expenditure-per-capita-constant-2015-USD.xlsx"
+      }
       onValueChange={(value) => {
         updateFilePath(value);
       }}
