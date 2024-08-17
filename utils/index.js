@@ -11,6 +11,7 @@ export const generateDataNodesandLinks = async (filePath) => {
   const regions = rawData
     .filter((cells) => {
       let regionName = cells[0];
+ 
       let regions = regionList.map(({ name }) => name);
       return regions.includes(regionName);
     })
@@ -29,6 +30,8 @@ export const generateDataNodesandLinks = async (filePath) => {
         });
       });
     });
+
+
 
   const countries = rawData
     .filter((cells) => {
@@ -95,7 +98,7 @@ async function getExcelData(filePath) {
 
     return {
       fieldName: String(headers[0]), //I get the field name.
-      data: dataRows.slice(1, 61), //Here I slice the data to make sure i get the countries and regions only
+      data: dataRows.slice(1, 80), //Here I slice the data to make sure i get the countries and regions only
     };
   } catch (error) {
     throw new Error("Error reading the Excel file:", error);

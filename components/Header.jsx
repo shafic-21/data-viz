@@ -34,13 +34,11 @@ const Header = () => {
 export default Header;
 
 const FieldSelectTab = () => {
-  const updateFilePath = useFileStore((state) => state.updateFilePath);
+  const { updateFilePath, filePath } = useFileStore();
 
   return (
     <Select
-      defaultValue={
-        "/data/resakss/economic-growth-and-inclusive-development/household-consumption-expenditure-per-capita-constant-2015-USD.xlsx"
-      }
+      defaultValue={filePath}
       onValueChange={(value) => {
         updateFilePath(value);
       }}

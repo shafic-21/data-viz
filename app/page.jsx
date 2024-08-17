@@ -16,13 +16,14 @@ export default function Home() {
   const [data, setData] = useState(null);
 
   const { filePath } = useFileStore();
-  const { updateYearList } = useYearListStore((state) => state);
+  const { updateYearList, setActiveYear } = useYearListStore((state) => state);
 
   const fetchData = useCallback(async () => {
     const result = await generateDataNodesandLinks(filePath).then((res) => {
       const { data, years } = res;
       setData(data);
       updateYearList(years);
+      setActiveYear(years[years.length - 1]);
     });
   }, [data, filePath]);
 

@@ -46,6 +46,8 @@ const BubbleChart = ({ data }) => {
       .filter((d) => Number(d.year) === activeYear && d.name != "Africa wide")
       .map((d) => ({ ...d }));
 
+    // console.log(nodes,data, activeYear);
+
     const simulation = d3
       .forceSimulation(nodes)
       .force("charge", d3.forceManyBody().strength(-100))

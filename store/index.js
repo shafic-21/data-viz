@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 export const useFileStore = create((set) => ({
   filePath:
-    "/data/resakss/agricultural-transformation-and-growth/agriculture-value-added-per-worker-constant-2015-USD.xlsx",
+    "/data/resakss/economic-growth-and-inclusive-development/employment-rate-of-population-15-years.xlsx",
   updateFilePath: (filePath) => set(() => ({ filePath })),
 }));
 
@@ -14,7 +14,6 @@ export const useYearListStore = create((set) => ({
       const sortedList = [...yearList].sort((a, b) => b - a);
       return {
         yearList: sortedList,
-        activeYear: state.activeYear || sortedList[0] || null,
       };
     }),
   setActiveYear: (year) => set({ activeYear: year }),
