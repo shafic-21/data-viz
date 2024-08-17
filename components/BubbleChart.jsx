@@ -26,7 +26,6 @@ const BubbleChart = ({ data }) => {
       .attr("transform", `translate(${targetX},${targetY})`);
   };
 
-
   useEffect(() => {
     if (!data || !svgRef.current || !containerRef.current) return;
 
@@ -62,7 +61,7 @@ const BubbleChart = ({ data }) => {
 
     const simulation = d3
       .forceSimulation(nodes)
-      .force("charge", d3.forceManyBody().strength(-100))
+      .force("charge", d3.forceManyBody().strength(-200))
       .force(
         "link",
         d3
@@ -150,7 +149,6 @@ const BubbleChart = ({ data }) => {
     );
 
     node.on("click", (event, d) => {
-    
       if (!compareMode) {
         updateActiveData(d.name);
         console.log("clicked Active");
@@ -221,8 +219,11 @@ const BubbleChart = ({ data }) => {
   }, [data, activeYear, updateActiveData, compareMode, compareData]);
 
   return (
-    <div ref={containerRef} className="h-full w-full">
-      <svg ref={svgRef} />
+    <div
+      ref={containerRef}
+      className="h-full w-full max-h-[400px] 2xl:max-h-[600px]"
+    >
+      <svg ref={svgRef} className="overflow-visible" />
     </div>
   );
 };

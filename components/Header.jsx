@@ -15,7 +15,7 @@ import { useFileStore } from "@/store";
 
 const Header = () => {
   return (
-    <header className="z-10 w-full">
+    <header className="z-10 w-full bg-transparent">
       <div className="flex items-center justify-between">
         <div className="flex flex-col w-full">
           <div className="flex items-center justify-between">

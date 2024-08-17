@@ -49,7 +49,7 @@ export default function Home() {
           <>
             {" "}
             <BubbleChart data={data} />
-            <div className="flex-shrink-0 relative">
+            <div className="relative">
               <div
                 className="absolute -top-40 left-0 bg-slate-700/50 backdrop-blur-3xl z-10  p-4 rounded-lg flex flex-col border text-sm font-semibold text-slate-400 "
                 style={{

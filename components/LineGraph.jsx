@@ -53,7 +53,7 @@ export function LineGraph({ nodes }) {
   };
 
   return (
-    <Card className="bg-slate-800 border-slate-700">
+    <Card className="bg-slate-800 border-slate-700 ">
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b border-slate-700/40 p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
           <CardTitle className="text-slate-200 flex gap-6 items-center">
