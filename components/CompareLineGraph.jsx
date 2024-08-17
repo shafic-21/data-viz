@@ -136,7 +136,7 @@ export function CompareLineGraph({ nodes }) {
             <span className="text-xs text-slate-500">Comparing</span>
             <span className="text-lg font-bold leading-none text-slate-200 sm:text-3xl">
               {compareData.length.toLocaleString()} of{" "}
-              <span className="text-md text-slate-400">3</span>
+              <span className="text-md text-slate-200">5</span>
             </span>
           </div>
         </div>

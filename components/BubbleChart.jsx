@@ -151,16 +151,16 @@ const BubbleChart = ({ data }) => {
         updateActiveData(d.name);
         console.log("clicked Active");
       } else {
-        if (compareData.length < 3) {
+        if (compareData.length < 5) {
           addCompareData({ code: d.code, color: d.color });
           console.log("hello");
         } else {
-          toast("You can compare a maximum of 3 region", {
+          toast("You can compare a maximum of 5 region", {
             description: "Remove one region to add",
-            // action: {
-            //   label: "Undo",
-            //   onClick: () => console.log("Undo"),
-            // },
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
           });
         }
       }
