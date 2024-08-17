@@ -44,7 +44,7 @@ export default function Home() {
 
   return (
     <main className="p-8 flex h-full flex-col relative isolate">
-      <div className="w-full h-full flex flex-col gap-12">
+      <div className="w-full h-full flex flex-col justify-between gap-20">
         {data ? (
           <>
             {" "}
