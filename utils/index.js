@@ -11,12 +11,23 @@ export const generateDataNodesandLinks = async (filePath) => {
   const regions = rawData
     .filter((cells) => {
       let regionName = cells[0];
- 
+
       let regions = regionList.map(({ name }) => name);
       return regions.includes(regionName);
     })
     .map((cells, regionIndex) => {
       let regionName = cells[0];
+      let regionColor = regionList.filter((reg) => reg.name == regionName)[0]
+        ?.color;
+      let regionCode = regionList.filter((reg) => reg.name == regionName)[0]
+        ?.code;
+      if (regionName !== "Africa wide") {
+        links.push({
+          source: regionName,
+          target: "Africa wide",
+          type: "region-link",
+        });
+      }
 
       let values = cells.slice(1).map((value, i) => {
         let year = years[i];
@@ -26,12 +37,11 @@ export const generateDataNodesandLinks = async (filePath) => {
           name: regionName,
           value: value,
           year: year,
-          code: null,
+          code: regionCode,
+          color: regionColor,
         });
       });
     });
-
-
 
   const countries = rawData
     .filter((cells) => {
@@ -57,6 +67,16 @@ export const generateDataNodesandLinks = async (filePath) => {
         })[0]
         .countries.filter((c) => c.name == countryName)[0].code;
 
+      let countryColor = regionList
+        .slice(1)
+        .filter((reg) => {
+          let ctries = reg.countries.map((country) => {
+            return country.name;
+          });
+          return ctries.includes(countryName);
+        })[0]
+        .countries.filter((c) => c.name == countryName)[0].color;
+
       links.push({
         source: countryName,
         target: countryRegion,
@@ -72,6 +92,7 @@ export const generateDataNodesandLinks = async (filePath) => {
           value: value,
           year,
           code: countryCode,
+          color: countryColor,
         });
       });
     });
@@ -103,4 +124,46 @@ async function getExcelData(filePath) {
   } catch (error) {
     throw new Error("Error reading the Excel file:", error);
   }
+}
+
+function createSafePropertyName(name) {
+  // If the name contains spaces or special characters, I wrap it in quotes
+  if (/\s|[^a-zA-Z0-9_]/.test(name)) {
+    return JSON.stringify(name);
+  }
+  return name;
+}
+
+export function organizeDataForChart(nodes, yearList) {
+  // Create a set of unique country/region names
+  const codeSet = new Set(nodes.map((node) => node.code));
+  const codes = Array.from(codeSet);
+
+  // Create the data structure
+  const chartData = yearList.map((year) => {
+    const yearData = { year };
+
+    codes.forEach((code) => {
+      const nodeForCode = nodes.find(
+        (node) => node.year === year && node.code === code
+      );
+      yearData[code] = nodeForCode ? nodeForCode.value : null;
+    });
+
+    return yearData;
+  });
+
+  return chartData;
+}
+
+export function getComparisonData(data, compareArray) {
+  return data.map((yearData) => {
+    const filteredData = { year: yearData.year };
+    compareArray.forEach((country) => {
+      // Use bracket notation to access properties, which works with spaces in names
+      const safeName = createSafePropertyName(country);
+      filteredData[safeName] = yearData[safeName];
+    });
+    return filteredData;
+  });
 }

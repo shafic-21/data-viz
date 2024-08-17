@@ -18,7 +18,7 @@ import { useChartDataStore, useYearListStore } from "@/store";
 import { Button } from "./ui/button";
 import { Info, TrendingUp, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { organizeDataForChart, getComparisonData } from "@/utils";
+import { organizeDataForChart } from "@/utils";
 
 const chartConfig = {
   views: {
@@ -30,21 +30,61 @@ const chartConfig = {
   },
 };
 
-export function LineGraph({ nodes }) {
-  const { activeData, toggleCompareMode, compareMode } = useChartDataStore();
+const testData = [
+  {
+    name: "Page A",
+    uv: 4000,
+    pv: 2400,
+    amt: 2400,
+  },
+  {
+    name: "Page B",
+    uv: 3000,
+    pv: 1398,
+    amt: 2210,
+  },
+  {
+    name: "Page C",
+    uv: 2000,
+    pv: 9800,
+    amt: 2290,
+  },
+  {
+    name: "Page D",
+    uv: 2780,
+    pv: 3908,
+    amt: 2000,
+  },
+  {
+    name: "Page E",
+    uv: 1890,
+    pv: 4800,
+    amt: 2181,
+  },
+  {
+    name: "Page F",
+    uv: 2390,
+    pv: 3800,
+    amt: 2500,
+  },
+  {
+    name: "Page G",
+    uv: 3490,
+    pv: 4300,
+    amt: 2100,
+  },
+];
+
+export function CompareLineGraph({ nodes }) {
+  const { activeData, toggleCompareMode, compareMode, compareData } =
+    useChartDataStore();
+  const { yearList } = useYearListStore();
 
   if (!activeData) return <p>No Data!</p>;
 
   const chartData = useMemo(() => {
-    return nodes.filter((node) => node.name === activeData);
+    return organizeDataForChart(nodes, yearList);
   }, [nodes, activeData, compareMode]);
-
-  const average = useMemo(() => {
-    const sum = chartData.reduce((acc, curr) => acc + curr.value, 0);
-    return chartData.length > 0 ? sum / chartData.length : 0;
-  }, [chartData]);
-
-  const { name, color, code, type } = chartData[0];
 
   const handleCompareMode = () => {
     toggleCompareMode();
@@ -55,62 +95,10 @@ export function LineGraph({ nodes }) {
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b border-slate-700/40 p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
           <CardTitle className="text-slate-200 flex gap-6 items-center">
-            {/* {compareMode ? (
-              <>
-                {compareData.map((name) => {
-                  let x = chartData.find((data) => data.name === name);
-                  return (
-                    <div className="rounded-2xl bg-slate-600/50 flex items-center overflow-hidden h-10 py-2 px-2">
-                      {type == "region" ? (
-                        <div
-                          style={{ backgroundColor: x?.color }}
-                          className="w-4 h-4 rounded-full"
-                        />
-                      ) : (
-                        <Image
-                          src={`https://hatscripts.github.io/circle-flags/flags/${x?.code}.svg`}
-                          alt=""
-                          width={10}
-                          height={10}
-                        />
-                      )}
-                      <span className="text-sm font-medium px-2">{name}</span>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="p-px hover:bg-slate-700/10 "
-                      >
-                        <X className="h-4 w-4 text-slate-400 hover:text-red-500" />
-                      </Button>
-                    </div>
-                  );
-                })}
-                {compareData.length < 3 && (
-                  <p className="text-xs text-slate-400 flex gap-2 items-center">
-                    <Info className="h-4 w-4" />
-                    Click on country / region bubble to add to chart ( Max 3 )
-                  </p>
-                )}
-              </>
-            ) : (
-             
-            )} */}
-            <div className="flex gap-2">
-              {type == "region" ? (
-                <div
-                  className="w-4 h-4 rounded-full"
-                  style={{ backgroundColor: color }}
-                />
-              ) : (
-                <Image
-                  src={`https://hatscripts.github.io/circle-flags/flags/${code}.svg`}
-                  alt=""
-                  height={20}
-                  width={20}
-                />
-              )}
-              <span> {name}</span>
-            </div>
+            <span className="text-xs font-normal flex gap-2 items-center text-slate-400">
+              <Info className="h-3 w-3" />
+              Click on a country / region bubble or legend to add
+            </span>
           </CardTitle>
           <CardDescription className="text-slate-500">
             Showing total value over the years
@@ -145,9 +133,10 @@ export function LineGraph({ nodes }) {
             </p>
           </Button>
           <div className="flex flex-1 flex-col justify-center gap-1 border-t border-slate-700/40 px-6 py-4 text-left sm:border-l sm:border-t-0 sm:px-8 sm:py-6">
-            <span className="text-xs text-slate-500">Average Value</span>
+            <span className="text-xs text-slate-500">Comparing</span>
             <span className="text-lg font-bold leading-none text-slate-200 sm:text-3xl">
-              {average.toLocaleString()}
+              {compareData.length.toLocaleString()} of{" "}
+              <span className="text-md text-slate-400">3</span>
             </span>
           </div>
         </div>
@@ -159,7 +148,7 @@ export function LineGraph({ nodes }) {
         >
           <LineChart
             accessibilityLayer
-            data={chartData}
+            data={testData}
             margin={{
               left: 12,
               right: 12,
@@ -167,7 +156,7 @@ export function LineGraph({ nodes }) {
           >
             <CartesianGrid vertical={false} className="stroke-slate-600" />
             <XAxis
-              dataKey="year"
+              dataKey="name"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
@@ -188,13 +177,15 @@ export function LineGraph({ nodes }) {
                 />
               }
             />
-            <Line
-              dataKey="value"
-              type="monotone"
-              stroke={chartData[0].color != "" ? chartData[0].color : "white"}
-              strokeWidth={2}
-              dot={false}
-            />
+            {compareData.map((v) => (
+              <Line
+                dataKey={v.code}
+                type="monotone"
+                stroke={v.color}
+                strokeWidth={2}
+                dot={false}
+              />
+            ))}
           </LineChart>
         </ChartContainer>
       </CardContent>

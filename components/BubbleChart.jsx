@@ -2,13 +2,21 @@ import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import { regionColors } from "@/constants";
 import { useChartDataStore, useYearListStore } from "@/store";
+import { toast } from "sonner";
 
 const BubbleChart = ({ data }) => {
   const svgRef = useRef(null);
   const containerRef = useRef(null);
   const { activeYear } = useYearListStore();
 
-  const { updateActiveData } = useChartDataStore((state) => state);
+  const {
+    activeData,
+    updateActiveData,
+    compareData,
+    addCompareData,
+    removeCompareData,
+    compareMode,
+  } = useChartDataStore();
 
   const regionColorScale = d3
     .scaleOrdinal()
@@ -43,7 +51,7 @@ const BubbleChart = ({ data }) => {
     const links = data.links.map((d) => ({ ...d }));
 
     const nodes = data.nodes
-      .filter((d) => Number(d.year) === activeYear && d.name != "Africa wide")
+      .filter((d) => Number(d.year) === activeYear)
       .map((d) => ({ ...d }));
 
     // console.log(nodes,data, activeYear);
@@ -102,9 +110,7 @@ const BubbleChart = ({ data }) => {
           ? 10
           : countrySizeScale(d.value)
       )
-      .attr("fill", (d) =>
-        d.type === "region" ? regionColorScale(d.name) : "lightblue"
-      )
+      .attr("fill", (d) => (d.type === "region" ? d.color : "lightblue"))
       .attr("opacity", (d) => (d.value === -1 ? 0.2 : 1));
 
     node
@@ -140,7 +146,24 @@ const BubbleChart = ({ data }) => {
     );
 
     node.on("click", (event, d) => {
-      updateActiveData(d.name);
+      console.log("clicked");
+      if (!compareMode) {
+        updateActiveData(d.name);
+        console.log("clicked Active");
+      } else {
+        if (compareData.length < 3) {
+          addCompareData({ code: d.code, color: d.color });
+          console.log("hello");
+        } else {
+          toast("You can compare a maximum of 3 region", {
+            description: "Remove one region to add",
+            // action: {
+            //   label: "Undo",
+            //   onClick: () => console.log("Undo"),
+            // },
+          });
+        }
+      }
     });
 
     simulation.on("tick", () => {
@@ -173,7 +196,7 @@ const BubbleChart = ({ data }) => {
     return () => {
       simulation.stop();
     };
-  }, [data, activeYear, updateActiveData]);
+  }, [data, activeYear, updateActiveData, compareMode, compareData]);
 
   return (
     <div ref={containerRef} className="h-full w-full">
