@@ -156,14 +156,16 @@ export function organizeDataForChart(nodes, yearList) {
   return chartData;
 }
 
-export function getComparisonData(data, compareArray) {
-  return data.map((yearData) => {
-    const filteredData = { year: yearData.year };
-    compareArray.forEach((country) => {
-      // Use bracket notation to access properties, which works with spaces in names
-      const safeName = createSafePropertyName(country);
-      filteredData[safeName] = yearData[safeName];
-    });
-    return filteredData;
-  });
+
+export function hexToRgb(hex) {
+ 
+  hex = hex.replace(/^#/, "");
+
+
+  const bigint = parseInt(hex, 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+
+  return `${r}, ${g}, ${b}`;
 }

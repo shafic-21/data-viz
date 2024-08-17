@@ -3,12 +3,15 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 
 const Sidebar = () => {
+
+
   return (
     <div className="flex flex-col h-3/4 flex-shrink-0 p-4 w-fit overflow-hidden bg-slate-900 rounded-md">
       <div className="flex h-full flex-col space-y-2">
         <h2 className="text-slate-200 font-normal">Legend</h2>
         <ScrollArea className="h-[100%]">
           {" "}
+
           {Object.entries(regionColors).map(([region, color]) => (
             <div key={region} className="flex items-center space-x-2">
               <div

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { regionColors } from "@/constants";
 import { useChartDataStore, useYearListStore } from "@/store";
 import { toast } from "sonner";
 
@@ -18,10 +17,15 @@ const BubbleChart = ({ data }) => {
     compareMode,
   } = useChartDataStore();
 
-  const regionColorScale = d3
-    .scaleOrdinal()
-    .domain(Object.keys(regionColors))
-    .range(Object.values(regionColors));
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+  const springBack = (selection, targetX, targetY) => {
+    selection
+      .transition()
+      .duration(300)
+      .ease(d3.easeElastic)
+      .attr("transform", `translate(${targetX},${targetY})`);
+  };
+
 
   useEffect(() => {
     if (!data || !svgRef.current || !containerRef.current) return;
@@ -146,7 +150,7 @@ const BubbleChart = ({ data }) => {
     );
 
     node.on("click", (event, d) => {
-      console.log("clicked");
+    
       if (!compareMode) {
         updateActiveData(d.name);
         console.log("clicked Active");
@@ -157,7 +161,6 @@ const BubbleChart = ({ data }) => {
         } else {
           toast("You can compare a maximum of 5 region", {
             description: "Remove one region to add",
-       
           });
         }
       }
@@ -180,12 +183,34 @@ const BubbleChart = ({ data }) => {
     }
 
     function dragged(event) {
-      event.subject.fx = event.x;
-      event.subject.fy = event.y;
+      const radius =
+        event.subject.type === "region"
+          ? regionSizeScale(event.subject.value)
+          : event.subject.value === -1
+          ? 10
+          : countrySizeScale(event.subject.value);
+
+      event.subject.fx = clamp(event.x, radius, width - radius);
+      event.subject.fy = clamp(event.y, radius, height - radius);
     }
 
     function dragended(event) {
       if (!event.active) simulation.alphaTarget(0);
+
+      const radius =
+        event.subject.type === "region"
+          ? regionSizeScale(event.subject.value)
+          : event.subject.value === -1
+          ? 10
+          : countrySizeScale(event.subject.value);
+
+      const targetX = clamp(event.subject.x, radius, width - radius);
+      const targetY = clamp(event.subject.y, radius, height - radius);
+
+      if (targetX !== event.subject.x || targetY !== event.subject.y) {
+        springBack(d3.select(this), targetX, targetY);
+      }
+
       event.subject.fx = null;
       event.subject.fy = null;
     }

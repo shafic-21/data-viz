@@ -18,12 +18,27 @@ const Header = () => {
     <header className="z-10 w-full">
       <div className="flex items-center justify-between">
         <div className="flex flex-col w-full">
-          <h1 className="text-slate-100 font-semibold text-lg pb-4">
-            ReSAKSS data visualisation
-          </h1>
-          <div className="flex w-full items-center justify-between">
+          <div className="flex items-center justify-between">
+            <h1 className="text-slate-100 font-semibold text-lg pb-4">
+              ReSAKSS Data Visualisation
+            </h1>
+            <span className="text-slate-200 text-xs">
+              Based on{" "}
+              <a
+                href="https://www.resakss.org/"
+                className="underline text-green-500 italic"
+              >
+                Resakss.org
+              </a>{" "}
+              data
+            </span>
+          </div>
+          <div className="flex w-full items-center justify-between h-fit">
             <FieldSelectTab />
-            <YearSelectTab />
+            <div className="flex gap-4 text-slate-400 h-full items-center">
+              <p className="text-sm font-semibold  h-10">Change Year</p>
+              <YearSelectTab />
+            </div>
           </div>
         </div>
       </div>

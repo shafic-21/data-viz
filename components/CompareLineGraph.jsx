@@ -111,7 +111,7 @@ export function CompareLineGraph({ nodes }) {
             {compareData.length < 5 && (
               <span className="text-xs font-normal flex gap-2 items-center text-slate-400">
                 <Info className="h-3 w-3" />
-                Click on a country / region bubble or legend to add
+                Click on a country / region bubble to add
               </span>
             )}
           </div>
