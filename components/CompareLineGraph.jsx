@@ -148,7 +148,7 @@ export function CompareLineGraph({ nodes }) {
         >
           <LineChart
             accessibilityLayer
-            data={testData}
+            data={chartData}
             margin={{
               left: 12,
               right: 12,
@@ -156,7 +156,7 @@ export function CompareLineGraph({ nodes }) {
           >
             <CartesianGrid vertical={false} className="stroke-slate-600" />
             <XAxis
-              dataKey="name"
+              dataKey="year"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
