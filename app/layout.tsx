@@ -3,7 +3,7 @@ import { Manrope } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Sidebar from "../components/Sidebar";
-import { LineGraph } from "@/components/LineGraph";
+import { Toaster } from "@/components/ui/sonner";
 
 const manrope = Manrope({ subsets: ["latin"] });
 
@@ -29,6 +29,7 @@ export default function RootLayout({
             <Sidebar />
           </div>
         </main>
+        <Toaster />
       </body>
     </html>
   );

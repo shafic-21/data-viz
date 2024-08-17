@@ -19,6 +19,7 @@ import { Button } from "./ui/button";
 import { Info, TrendingUp, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { organizeDataForChart } from "@/utils";
+import { toast } from "sonner";
 
 const chartConfig = {
   views: {
@@ -30,54 +31,14 @@ const chartConfig = {
   },
 };
 
-const testData = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
-
 export function CompareLineGraph({ nodes }) {
-  const { activeData, toggleCompareMode, compareMode, compareData } =
-    useChartDataStore();
+  const {
+    activeData,
+    toggleCompareMode,
+    compareMode,
+    compareData,
+    removeCompareData,
+  } = useChartDataStore();
   const { yearList } = useYearListStore();
 
   if (!activeData) return <p>No Data!</p>;
@@ -85,6 +46,20 @@ export function CompareLineGraph({ nodes }) {
   const chartData = useMemo(() => {
     return organizeDataForChart(nodes, yearList);
   }, [nodes, activeData, compareMode]);
+
+  const compareAssets = useMemo(() => {
+    const data = compareData.map(({ code, color }) => {
+      const node = nodes.find((n) => n.code === code);
+
+      return {
+        name: node.name,
+        code,
+        color,
+        type: node.type,
+      };
+    });
+    return data;
+  }, [nodes, activeData, compareMode, compareData]);
 
   const handleCompareMode = () => {
     toggleCompareMode();
@@ -94,14 +69,54 @@ export function CompareLineGraph({ nodes }) {
     <Card className="bg-slate-800 border-slate-700">
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b border-slate-700/40 p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle className="text-slate-200 flex gap-6 items-center">
-            <span className="text-xs font-normal flex gap-2 items-center text-slate-400">
-              <Info className="h-3 w-3" />
-              Click on a country / region bubble or legend to add
-            </span>
-          </CardTitle>
+          <div className="text-slate-200 flex gap-4 items-center">
+            {compareAssets.map(({ name, code, color, type }) => (
+              <div
+                key={code}
+                className="flex items-center px-2 gap-2 py-2 bg-slate-700 rounded-xl group cursor-pointer group"
+              >
+                {type == "region" ? (
+                  <div
+                    className="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: color }}
+                  />
+                ) : (
+                  <Image
+                    src={`https://hatscripts.github.io/circle-flags/flags/${code}.svg`}
+                    alt=""
+                    height={10}
+                    width={10}
+                    className="h-3 w-3"
+                  />
+                )}
+                <span className="text-slate-300 text-sm">{name}</span>
+                <Button
+                  variant={"ghost"}
+                  onClick={() => {
+                    if (compareData.length > 1) {
+                      removeCompareData(code);
+                    } else {
+                      toast("Chart need atleast one country / region", {
+                        description: "Switch off compare mode",
+                      });
+                    }
+                  }}
+                  className=" hover:bg-red-700/10 p-0 h-6 w-6 text-slate-400"
+                >
+                  <X className="h-4 w-4 text-slate-400 group-hover:text-red-700" />
+                </Button>
+              </div>
+              // <p>{name}</p>
+            ))}
+            {compareData.length < 5 && (
+              <span className="text-xs font-normal flex gap-2 items-center text-slate-400">
+                <Info className="h-3 w-3" />
+                Click on a country / region bubble or legend to add
+              </span>
+            )}
+          </div>
           <CardDescription className="text-slate-500">
-            Showing total value over the years
+            Comparing values of selected regions over the years
           </CardDescription>
         </div>
         <div className="flex items-center">
@@ -166,11 +181,9 @@ export function CompareLineGraph({ nodes }) {
             <ChartTooltip
               content={
                 <ChartTooltipContent
-                  className="w-[150px]"
-                  nameKey="value"
+                  className="w-[180px]"
                   labelFormatter={(value, props) => (
                     <p className="flex gap-2">
-                      <span>{props[0].payload.name}</span>
                       <span>{props[0].payload.year}</span>
                     </p>
                   )}
@@ -181,6 +194,7 @@ export function CompareLineGraph({ nodes }) {
               <Line
                 dataKey={v.code}
                 type="monotone"
+                name={v.name}
                 stroke={v.color}
                 strokeWidth={2}
                 dot={false}

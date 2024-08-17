@@ -25,12 +25,18 @@ export const useChartDataStore = create((set) => ({
   compareData: [],
   updateActiveData: (activeData) => set((state) => ({ activeData })),
   addCompareData: (newData) =>
+    set((state) => {
+      if (!state.compareData.some((item) => item.code === newData.code)) {
+        return {
+          compareData: [...state.compareData, newData],
+        };
+      }
+
+      return state;
+    }),
+  removeCompareData: (code) =>
     set((state) => ({
-      compareData: [...state.compareData, newData],
-    })),
-  removeCompareData: (name) =>
-    set((state) => ({
-      compareData: state.compareData.filter((data) => data !== name),
+      compareData: state.compareData.filter((data) => data.code !== code),
     })),
   toggleCompareMode: () =>
     set((state) => ({ compareMode: !state.compareMode })),

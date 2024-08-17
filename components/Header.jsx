@@ -46,7 +46,7 @@ const FieldSelectTab = () => {
       <SelectTrigger className=" w-fit mb-4 rounded-fulltext-xs font-semibold bg-green-600/10 text-green-600 border-none">
         <SelectValue placeholder="Select field" />
       </SelectTrigger>
-      <SelectContent className="bg-green-600/5 border-none text-green-800">
+      <SelectContent className="bg-slate-800 border-none text-slate-500">
         {Object.entries(resakssData).map(([group, fields]) => (
           <SelectGroup key={group}>
             <SelectLabel className="text-sm">{group}</SelectLabel>
@@ -80,12 +80,12 @@ const YearSelectTab = () => {
         <SelectValue placeholder="Select field" />
         {/* <SelectIcon/> */}
       </SelectTrigger>
-      <SelectContent className="bg-red-600/5 min-w-0 border-none text-slate-500">
+      <SelectContent className="bg-slate-800 min-w-0  border-none text-slate-500">
         {yearList.map((year) => (
           <SelectItem
             key={year}
             value={year}
-            className="focus:bg-red-600/10 w-20 text-xs text-red-800 focus:text-red-800"
+            className="focus:bg-red-600/10 w-20 text-xs text-slate-500 focus:text-red-800"
           >
             {year}
           </SelectItem>

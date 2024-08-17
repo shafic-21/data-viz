@@ -31,7 +31,8 @@ const chartConfig = {
 };
 
 export function LineGraph({ nodes }) {
-  const { activeData, toggleCompareMode, compareMode } = useChartDataStore();
+  const { activeData, toggleCompareMode, compareMode, addCompareData } =
+    useChartDataStore();
 
   if (!activeData) return <p>No Data!</p>;
 
@@ -48,6 +49,7 @@ export function LineGraph({ nodes }) {
 
   const handleCompareMode = () => {
     toggleCompareMode();
+    addCompareData({ code, color, name });
   };
 
   return (
@@ -55,46 +57,6 @@ export function LineGraph({ nodes }) {
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b border-slate-700/40 p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
           <CardTitle className="text-slate-200 flex gap-6 items-center">
-            {/* {compareMode ? (
-              <>
-                {compareData.map((name) => {
-                  let x = chartData.find((data) => data.name === name);
-                  return (
-                    <div className="rounded-2xl bg-slate-600/50 flex items-center overflow-hidden h-10 py-2 px-2">
-                      {type == "region" ? (
-                        <div
-                          style={{ backgroundColor: x?.color }}
-                          className="w-4 h-4 rounded-full"
-                        />
-                      ) : (
-                        <Image
-                          src={`https://hatscripts.github.io/circle-flags/flags/${x?.code}.svg`}
-                          alt=""
-                          width={10}
-                          height={10}
-                        />
-                      )}
-                      <span className="text-sm font-medium px-2">{name}</span>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="p-px hover:bg-slate-700/10 "
-                      >
-                        <X className="h-4 w-4 text-slate-400 hover:text-red-500" />
-                      </Button>
-                    </div>
-                  );
-                })}
-                {compareData.length < 3 && (
-                  <p className="text-xs text-slate-400 flex gap-2 items-center">
-                    <Info className="h-4 w-4" />
-                    Click on country / region bubble to add to chart ( Max 3 )
-                  </p>
-                )}
-              </>
-            ) : (
-             
-            )} */}
             <div className="flex gap-2">
               {type == "region" ? (
                 <div

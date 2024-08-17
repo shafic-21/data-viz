@@ -76,7 +76,7 @@ export const regionList = [
     name: "Africa wide",
     code: "afw",
     countries: [...countryList],
-    color: "#fff",
+    color: "#F9F6EE",
   },
   {
     id: "western-africa",
