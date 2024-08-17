@@ -40,7 +40,7 @@ const BubbleChart = ({ data }) => {
     const regionSizeScale = d3
       .scaleLinear()
       .domain([d3.min(regionValues), d3.max(regionValues)])
-      .range([50, 100]);
+      .range([40, 100]);
 
     const countryValues = data.nodes
       .filter((d) => d.type === "country" && d.value !== -1)
@@ -49,7 +49,7 @@ const BubbleChart = ({ data }) => {
     const countrySizeScale = d3
       .scaleLinear()
       .domain([d3.min(countryValues), d3.max(countryValues)])
-      .range([10, 40]);
+      .range([5, 30]);
 
     const links = data.links.map((d) => ({ ...d }));
 

@@ -44,14 +44,14 @@ export default function Home() {
 
   return (
     <main className="p-8 flex h-full flex-col relative isolate">
-      <div className="w-full h-full flex flex-col justify-between gap-20">
+      <div className="w-full h-full flex flex-col justify-start gap-20">
         {data ? (
           <>
             {" "}
             <BubbleChart data={data} />
             <div className="relative">
               <div
-                className="absolute -top-40 left-0 bg-slate-700/50 backdrop-blur-3xl z-10  p-4 rounded-lg flex flex-col border text-sm font-semibold text-slate-400 "
+                className="absolute -top-80 left-0 bg-slate-700/50 backdrop-blur-3xl z-10  p-4 rounded-lg flex flex-col border text-sm font-semibold text-slate-400 "
                 style={{
                   borderColor: activeDataValues.color
                     ? `rgba(${hexToRgb(activeDataValues.color)}, 0.5)`

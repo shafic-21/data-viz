@@ -22,7 +22,7 @@ export default function RootLayout({
       <body
         className={`${manrope.className} bg-slate-950 min-h-screen overflow-x-hidden`}
       >
-        <main className="px-8 py-4 w-screen max-w-[1400px] 2xl:max-w-none mx-auto h-full flex flex-col gap-4 overflow-hidden">
+        <main className="px-8 py-4 w-screen max-w-[1400px] 2xl:max-w-none mx-auto h-full flex flex-col gap-4 overflow-x-hidden">
           <Header />
           <div className="flex flex-grow flex-1 w-full overflow-hidden">
             <div className="w-full flex-grow">{children}</div>
