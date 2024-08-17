@@ -37,14 +37,14 @@ export function LineGraph({ nodes }) {
   }, [chartData]);
 
   return (
-    <Card>
-      <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
+    <Card className="bg-slate-800 border-slate-700">
+      <CardHeader className="flex flex-col items-stretch space-y-0 border-b border-slate-700/40 p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
           <CardTitle>{activeData}</CardTitle>
           <CardDescription>Showing total value over time</CardDescription>
         </div>
         <div className="flex">
-          <div className="flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left sm:border-l sm:border-t-0 sm:px-8 sm:py-6">
+          <div className="flex flex-1 flex-col justify-center gap-1 border-t border-slate-700/40 px-6 py-4 text-left sm:border-l sm:border-t-0 sm:px-8 sm:py-6">
             <span className="text-xs text-muted-foreground">Average Value</span>
             <span className="text-lg font-bold leading-none sm:text-3xl">
               {average.toLocaleString()}
@@ -64,14 +64,16 @@ export function LineGraph({ nodes }) {
               left: 12,
               right: 12,
             }}
+        
           >
-            <CartesianGrid vertical={false} />
+            <CartesianGrid vertical={false} className="" />
             <XAxis
               dataKey="year"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
               minTickGap={32}
+             
             />
             <ChartTooltip
               content={
