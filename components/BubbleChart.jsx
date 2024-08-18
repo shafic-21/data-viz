@@ -26,30 +26,39 @@ const BubbleChart = ({ data }) => {
       .attr("transform", `translate(${targetX},${targetY})`);
   };
 
+  const calculateScaleRanges = (width, height) => {
+    const minDimension = Math.min(width, height);
+    return {
+      regionRange: [minDimension * 0.05, minDimension * 0.15],
+      countryRange: [minDimension * 0.01, minDimension * 0.05],
+    };
+  };
+
   useEffect(() => {
     if (!data || !svgRef.current || !containerRef.current) return;
 
     const container = d3.select(containerRef.current);
     const width = containerRef.current.clientWidth;
     const height = containerRef.current.clientHeight;
+    const { regionRange, countryRange } = calculateScaleRanges(width, height);
 
     const regionValues = data.nodes
       .filter((d) => d.type === "region")
       .map((d) => d.value);
 
-    const regionSizeScale = d3
-      .scaleLinear()
-      .domain([d3.min(regionValues), d3.max(regionValues)])
-      .range([40, 100]);
+  const regionSizeScale = d3
+    .scaleLinear()
+    .domain([d3.min(regionValues), d3.max(regionValues)])
+    .range(regionRange);
 
     const countryValues = data.nodes
       .filter((d) => d.type === "country" && d.value !== -1)
       .map((d) => d.value);
 
-    const countrySizeScale = d3
-      .scaleLinear()
-      .domain([d3.min(countryValues), d3.max(countryValues)])
-      .range([5, 30]);
+   const countrySizeScale = d3
+     .scaleLinear()
+     .domain([d3.min(countryValues), d3.max(countryValues)])
+     .range(countryRange);
 
     const links = data.links.map((d) => ({ ...d }));
 
@@ -77,7 +86,9 @@ const BubbleChart = ({ data }) => {
           .radius((d) =>
             d.type === "region"
               ? regionSizeScale(d.value) + 2
-              : (d.value === -1 ? 10 : countrySizeScale(d.value)) + 2
+              : (d.value === -1
+                  ? countrySizeScale.range()[0] / 2
+                  : countrySizeScale(d.value)) + 2
           )
           .iterations(3)
       )
@@ -110,7 +121,7 @@ const BubbleChart = ({ data }) => {
         d.type === "region"
           ? regionSizeScale(d.value)
           : d.value === -1
-          ? 10
+          ? countrySizeScale.range()[0] / 2
           : countrySizeScale(d.value)
       )
       .attr("fill", (d) => (d.type === "region" ? d.color : "lightblue"))
@@ -119,7 +130,10 @@ const BubbleChart = ({ data }) => {
     node
       .filter((d) => d.type === "country")
       .each(function (d) {
-        const flagSize = d.value === -1 ? 10 : countrySizeScale(d.value);
+       const flagSize =
+         d.value === -1
+           ? countrySizeScale.range()[0] / 2
+           : countrySizeScale(d.value);
         d3.select(this)
           .append("clipPath")
           .attr("id", `clip-${d.code}`)
@@ -185,7 +199,7 @@ const BubbleChart = ({ data }) => {
         event.subject.type === "region"
           ? regionSizeScale(event.subject.value)
           : event.subject.value === -1
-          ? 10
+          ? countrySizeScale.range()[0] / 2
           : countrySizeScale(event.subject.value);
 
       event.subject.fx = clamp(event.x, radius, width - radius);
@@ -195,12 +209,12 @@ const BubbleChart = ({ data }) => {
     function dragended(event) {
       if (!event.active) simulation.alphaTarget(0);
 
-      const radius =
-        event.subject.type === "region"
-          ? regionSizeScale(event.subject.value)
-          : event.subject.value === -1
-          ? 10
-          : countrySizeScale(event.subject.value);
+     const radius =
+       event.subject.type === "region"
+         ? regionSizeScale(event.subject.value)
+         : event.subject.value === -1
+         ? countrySizeScale.range()[0] / 2
+         : countrySizeScale(event.subject.value);
 
       const targetX = clamp(event.subject.x, radius, width - radius);
       const targetY = clamp(event.subject.y, radius, height - radius);
