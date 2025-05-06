@@ -1,12 +1,3 @@
-**Drafting the README**
-
-The user is looking to create a badass README for their GitHub profile. Based on the uploaded prompt.txt, it looks like the project is related to "Resakss Data Visualisation." I'll highlight key sections for the README like project features, setup instructions, technologies, installation steps, how to run it, and possibly mention contribution guidelines and license.
-
-Since they specifically want markdown text, no canvas is necessary — I’ll generate a clean markdown version for them to paste in.
-
-
-Thought for 21 seconds
-
 
 # Resakss-Data-Viz 📊✨
 
