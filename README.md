@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+**Drafting the README**
 
-## Getting Started
+The user is looking to create a badass README for their GitHub profile. Based on the uploaded prompt.txt, it looks like the project is related to "Resakss Data Visualisation." I'll highlight key sections for the README like project features, setup instructions, technologies, installation steps, how to run it, and possibly mention contribution guidelines and license.
 
-First, run the development server:
+Since they specifically want markdown text, no canvas is necessary — I’ll generate a clean markdown version for them to paste in.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Thought for 21 seconds
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+# Resakss-Data-Viz 📊✨
 
-## Learn More
+*(A visual exploration of Africa’s agricultural data, built with Next .js & D3 — and dripping with Tailwind-powered style.)*
 
-To learn more about Next.js, take a look at the following resources:
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+![Built with Next.js](https://img.shields.io/static/v1?label=Next.js\&message=app-router\&color=black\&logo=nextdotjs\&logoColor=white)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 🚀  What is this?
 
-## Deploy on Vercel
+**Resakss-Data-Viz** turns raw ReSAKSS Excel sheets into eye-candy: an interactive bubble map + slick line graphs that let you compare up to five regions or countries at once. It’s designed for speed, clarity, and a *chef’s-kiss* developer experience.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+*Why should you care?*
+Because staring at CSV tables is boring; dragging vibrant bubbles around is not.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
+
+## ✨  Highlights
+
+| 💎 Feature                   | 🔥 Why it rocks                                                           |
+| ---------------------------- | ------------------------------------------------------------------------- |
+| **Bubble-force chart**       | Drag-and-drop, physics-based layout for instant context                   |
+| **On-the-fly compare mode**  | Flip a switch, add up to five regions/countries, and watch the lines race |
+| **Dark-mode first**          | Colors auto-swap thanks to CSS custom-props                               |
+| **Radix + shadcn/ui**        | Accessible, headless components that look stellar out of the box          |
+| **State handled by Zustand** | Predictable, minimal-boilerplate global stores                            |
+| **Sonner toasts**            | Non-intrusive feedback that never clutters your view                      |
+| **100 % TypeScript**         | Strong types from the API layer to the last UI pixel                      |
+
+---
+
+## 🏗  Tech stack
+
+* **Next.js (app router)** — React 18, server actions, the works
+* **TypeScript** — type-safe from utils to components
+* **Tailwind CSS v4** — JIT, arbitrary values, dark-mode class
+* **D3 + Recharts** — custom force-simulation meets production-ready charts
+* **Radix UI + shadcn/ui** — accessible building blocks
+* **Zustand** — ergonomic state management
+* **Sonner** — delightful toasts
+
+---
+
+## 📂  Project layout (tl;dr)
+
+````
+data-viz/
+├─ app/          # Next.js app-router pages & global layout
+├─ components/   # Reusable UI (BubbleChart, LineGraph, Sidebar…)
+├─ store/        # Zustand stores
+├─ constants/    # Shared look-ups and color palettes
+└─ utils/        # Data wrangling helpers
+``` :contentReference[oaicite:0]{index=0}:contentReference[oaicite:1]{index=1}
+
+---
+
+## 🛠  Getting started
+
+1. **Clone & install**
+
+   ```bash
+   git clone https://github.com/your-handle/resakss-data-viz.git
+   cd data-viz
+   pnpm install # or yarn / npm
+````
+
+2. **Run dev server**
+
+   ```bash
+   pnpm dev
+   # Visit http://localhost:3000
+   ```
+
+3. **Import data**
+
+   Drop a ReSAKSS-formatted Excel file via the UI or tweak `constants/resakssData` to point at your sheet.
+
+---
+
+## 📸  Screenshots
+
+| Bubble chart            | Compare mode            |
+| ----------------------- | ----------------------- |
+| *(add GIF or PNG here)* | *(add GIF or PNG here)* |
+
+---
+
+## 🗺️  Roadmap
+
+* [ ] CSV/JSON drag-and-drop alongside XLSX
+* [ ] Mobile pinch-to-zoom gestures
+* [ ] Server-side data caching with Edge Functions
+* [ ] i18n (EN / FR / PT)
+
+---
+
+## 🤝  Contributing
+
+1. Fork the repo 🍴
+2. Create your feature branch (`git checkout -b feat/amazing`)
+3. Commit & push (`git commit -m "feat: add amazing"` → `git push origin`)
+4. Open a PR — GitHub Actions will lint & type-check automatically.
+
+> **Pro-tip:** keep commits atomic; prettier & ESLint configs are already included.
+
+---
+
+## 📝  License
+
+MIT © 2025 **Shafic Zziwa**.
+Pull requests and issues are welcome — just keep them classy. 😉
+
+---
+
+Made with ☕, 💻, and a stubborn refusal to accept boring data.
